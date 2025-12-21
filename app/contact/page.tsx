@@ -42,8 +42,8 @@ export default function Contact() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-text-secondary text-center mb-16 max-w-2xl mx-auto text-lg font-light leading-relaxed"
             >
-              Have a project in mind or want to collaborate? I'd love to hear from you. Send me a
-              message and let's create something amazing together.
+              Have a project in mind or want to collaborate? I&apos;d love to hear from you. Send me a
+              message and let&apos;s create something amazing together.
             </motion.p>
 
         <ContactForm />
@@ -156,4 +156,3 @@ export default function Contact() {
     </section>
   );
 }
-

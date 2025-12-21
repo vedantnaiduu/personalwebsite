@@ -194,6 +194,8 @@ const Typewriter = ({
 
     loop,
 
+    initialDelay,
+
   ])
 
   return (

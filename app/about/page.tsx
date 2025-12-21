@@ -47,14 +47,14 @@ export default function About() {
           className="space-y-8 text-text-secondary leading-relaxed text-lg"
         >
           <p>
-            I'm a Computer Science student at UMass Amherst, currently exploring the intersection of 
-            machine learning, full-stack development, and computational biology. I've been fortunate 
+            I&apos;m a Computer Science student at UMass Amherst, currently exploring the intersection of 
+            machine learning, full-stack development, and computational biology. I&apos;ve been fortunate 
             enough to work on some interesting projects, ranging from healthcare analytics to EEG foundation 
-            models, and I'm always learning something new.
+            models, and I&apos;m always learning something new.
           </p>
 
           <p>
-            Right now, I'm doing computational biology research at Stanford, where I'm building 
+            Right now, I&apos;m doing computational biology research at Stanford, where I&apos;m building 
             pipelines that help identify promising candidates for experiments. I also spent some time 
             as an ML Research Fellow at Algoverse, working on evaluation systems. Before that, I 
             interned at QuickSoftPro, where I got to optimize some backend systems and learn a lot 
@@ -62,18 +62,18 @@ export default function About() {
           </p>
 
           <p>
-            Lately, I've developed a deep passion for the art of building. There's something uniquely 
+            Lately, I&apos;ve developed a deep passion for the art of building. There&apos;s something uniquely 
             satisfying about taking a conceptual idea and turning it into a tangible, functional product. 
-            Whether it's an AI-driven maintenance tool or a healthcare monitoring system, I find myself 
+            Whether it&apos;s an AI-driven maintenance tool or a healthcare monitoring system, I find myself 
             increasingly drawn to the process of creating solutions that bridge the gap between 
             sophisticated technology and real-world utility.
           </p>
 
           <p>
-            When I'm not coding, you'll probably find me working on hackathon projects (I've been 
+            When I&apos;m not coding, you&apos;ll probably find me working on hackathon projects (I&apos;ve been 
             lucky to win a few awards), scrolling through TikTok for way too long, or trying to 
-            balance staying active with actually having a life. I'm still figuring things out, but 
-            I'm enjoying the journey.
+            balance staying active with actually having a life. I&apos;m still figuring things out, but 
+            I&apos;m enjoying the journey.
           </p>
         </motion.div>
 
@@ -163,7 +163,7 @@ export default function About() {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16"
         >
-              <h2 className="text-phi-2 md:text-4xl font-serif font-bold text-text-primary mb-8">When I'm Not Coding</h2>
+              <h2 className="text-phi-2 md:text-4xl font-serif font-bold text-text-primary mb-8">When I&apos;m Not Coding</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Pickleball */}
             <motion.div
@@ -227,7 +227,7 @@ export default function About() {
                 </motion.div>
                 <h3 className="text-accent-blue font-bold text-lg mb-2">Lifting Weights</h3>
                 <p className="text-text-secondary text-sm">
-                  Hitting the gym regularly. It's become a good way to clear my head and stay balanced.
+                  Hitting the gym regularly. It&apos;s become a good way to clear my head and stay balanced.
                 </p>
               </div>
             </motion.div>
@@ -431,4 +431,3 @@ export default function About() {
     </section>
   );
 }
-

@@ -59,7 +59,7 @@ export default function Hero() {
           className="text-2xl md:text-4xl text-text-secondary mb-16 font-light tracking-wide max-w-4xl"
         >
           <div className="whitespace-pre-wrap leading-relaxed">
-            <span>I'm a </span>
+            <span>I&apos;m a </span>
             <Typewriter
               text={[
                 "Computer Science Student at UMass Amherst",
@@ -175,4 +175,3 @@ export default function Hero() {
     </section>
   );
 }
-
