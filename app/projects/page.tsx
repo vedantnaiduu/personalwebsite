@@ -9,46 +9,51 @@ const projects = [
   {
     title: 'Social Oracle',
     description:
-      'An AI-powered social discovery platform that transforms how people socialize and discover hidden gems within their city. Social Oracle leverages conversational AI, real-time prediction market data, and local forum insights to help users find personalized social experiences while connecting businesses with potential customers.',
+      'Social Oracle is an AI-powered social discovery platform designed to transform how people socialize and discover hidden gems within their city. Leveraging conversational AI, real-time prediction market data from Polymarket, and local forum insights from Reddit, the platform helps users find personalized social experiences while connecting businesses with potential customers. It features a sophisticated agentic layer that processes incoming SMS messages via Apache Kafka, classifies user intent using OpenAI GPT-4o-mini, and generates contextually relevant suggestions. The business side includes a web-based dashboard for managing sales and tracking analytics, bridging the gap between social discovery and business growth.',
     highlights: [
-      'Built scalable backend with Apache Kafka for real-time message processing',
-      'Integrated OpenAI GPT-4o-mini for language understanding',
-      'Developed real-time data integration using Polymarket and Reddit MCP'
+      'Built a scalable backend with Apache Kafka for real-time, asynchronous message processing',
+      'Integrated OpenAI GPT-4o-mini for natural language understanding and intent classification',
+      'Developed real-time data integrations using Polymarket and Reddit MCP for market and community insights',
+      'Optimized AI response times using async data fetching, caching, and fire-and-forget techniques'
     ],
-    technologies: ['Node.js', 'TypeScript', 'Next.js', 'Apache Kafka', 'OpenAI', 'Supabase', 'Polymarket'],
-    image: '/images/projects/retrocare.png',
+    technologies: ['Node.js', 'TypeScript', 'Next.js', 'Apache Kafka', 'OpenAI', 'Supabase', 'Polymarket', 'Reddit MCP'],
+    image: '/images/projects/social-oracle.png',
     link: 'https://shipyardhq.tech/projects/8d32e889-dfad-45c4-9000-a09970cb6265',
-    github: '#',
+    github: 'https://github.com/TCYTseven/serieshax',
   },
   {
     title: 'Resi',
-    award: '🏆 Best Beginner Use of AI',
+    award: 'Best Beginner Use of AI',
+    awardType: 'hackathon-winner' as const,
     description:
-      'Resi is a voice-driven maintenance and residential life assistant for UMass. Students describe an issue on web, iOS, or Android; Resi transcribes it, classifies it, and creates a structured ticket. It routes tasks to Maintenance or RAs, assigns queue positions, and keeps everyone updated through a live dashboard.',
+      'Resi is a voice-driven maintenance and residential life assistant built for UMass students. It addresses the friction of outdated paper forms and phone calls by providing a familiar, voice-first interface for reporting dorm issues. Students describe their problem via web or mobile; Resi transcribes the audio using OpenAI Whisper, classifies the issue with GPT-4-Turbo, and automatically routes structured tickets to the appropriate maintenance or RA queues. The system features a real-time dashboard for facilities staff with automated queue management and backfilling every 5 seconds, ensuring a consistently up-to-date backlog of open tickets.',
     highlights: [
-      'Built Expo/React Native cross-platform app',
-      'Node.js + Express backend with OpenAI Whisper',
-      'Real-time queue assignment with Firebase'
+      'Architected a cross-platform Expo/React Native app with role-based navigation and voice recording',
+      'Built a high-performance speech-to-text pipeline using OpenAI Whisper and GPT-4-Turbo',
+      'Implemented real-time data synchronization and automated queue routing using Firebase',
+      'Developed a shared RA/Maintenance dashboard with real-time updates and SLA-based escalation'
     ],
-    technologies: ['React Native', 'Expo', 'Node.js', 'Express', 'Whisper', 'GPT-4', 'Firebase'],
+    technologies: ['React Native', 'Expo', 'Node.js', 'Express', 'Whisper', 'GPT-4', 'Firebase', 'TypeScript'],
     image: '/images/projects/resi.png',
     link: 'https://devpost.com/software/resi',
-    github: '#',
+    github: 'https://github.com/RavjeetChahal/Resi',
   },
   {
     title: 'RetroCare',
-    award: '🏆 Best Healthcare Hack',
+    award: 'Best Healthcare Hack',
+    awardType: 'hackathon-winner' as const,
     description:
-      'RetroCare reimagines the bedside nurse through AI calls that monitor seniors\' meds, mood, and safety, offering compassionate care and peace of mind. A full end-to-end AI calling loop with voice selection, scripted dialogue, medication logging, mood scoring, anomaly detection, and caregiver notification.',
+      'RetroCare reimagines senior care through a scheduled AI-voice check-in service that monitors medication adherence, mood, and safety. The platform places daily automated calls to older adults, asking scripted health questions and logging responses into a longitudinal record for caregivers. It uses a custom microservice to convert call audio into embeddings, flagging abnormal sessions that suggest vocal fatigue or distress. The system orchestrates six complex VAPI tools—medication logging, mood scoring, anomaly detection, etc.—and notifies caregivers in under 10 seconds via a mission-control dashboard when concerns are detected.',
     highlights: [
-      'Expo Router + React Native UI',
-      'VAPI webhooks + ElevenLabs previews',
-      'Timezone-safe scheduler with retries'
+      'Developed a full end-to-end AI calling loop with voice selection and scripted dialogue',
+      'Engineered an audio anomaly detection service using signal processing and vector embeddings',
+      'Built a timezone-safe scheduler with retries to ensure reliable patient check-ins across regions',
+      'Created a production-ready caregiver mission-control dashboard using Expo Router and React Query'
     ],
-    technologies: ['React Native', 'Expo', 'Node.js', 'VAPI', 'ElevenLabs', 'Supabase'],
-    image: '/images/projects/social-oracle.png',
+    technologies: ['React Native', 'Expo', 'Node.js', 'VAPI', 'ElevenLabs', 'Supabase', 'TypeScript', 'React Query'],
+    image: '/images/projects/retrocare.png',
     link: 'https://devpost.com/software/retrocare',
-    github: '#',
+    github: 'https://github.com/RavjeetChahal/RetroCare',
   },
 ];
 
@@ -58,19 +63,13 @@ export default function Projects() {
       <div className="max-w-7xl mx-auto">
         
         {/* Page Header Cell */}
-        <div className="border border-blue-500/20 bg-black p-8 md:p-16 mb-16 relative text-center">
-          <div className="absolute top-4 left-8 font-mono text-[10px] uppercase opacity-40">
-            [ ARCHIVE: SELECTED_WORKS ]
-          </div>
+        <div className="border border-blue-500/20 bg-black p-8 md:p-16 mb-16 relative text-center group">
+          <h1 className="text-huge leading-none py-0 font-bold uppercase text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-500 to-white bg-[length:200%_auto] group-hover:animate-[shimmer_3s_linear_infinite] transition-all">
+            Projects
+          </h1>
           
-          <AnimatedText 
-            text="PROJECTS"
-            className="py-0"
-            textClassName="text-huge leading-none py-0"
-          />
-          
-          <div className="mt-4 max-w-xl mx-auto font-serif text-xl md:text-2xl opacity-70 italic">
-            &quot;Engineering solutions at the intersection of complex data systems and human-centric interfaces.&quot;
+          <div className="mt-4 max-w-xl mx-auto text-xl md:text-2xl opacity-70 italic font-sans">
+            Engineering solutions at the intersection of complex data systems and human-centric interfaces.
           </div>
         </div>
 

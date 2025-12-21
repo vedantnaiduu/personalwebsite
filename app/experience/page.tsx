@@ -49,19 +49,13 @@ export default function Experience() {
       <div className="max-w-7xl mx-auto">
         
         {/* Page Header Cell */}
-        <div className="border border-blue-500/20 bg-black p-8 md:p-16 mb-16 relative text-center">
-          <div className="absolute top-4 right-8 font-mono text-[10px] uppercase opacity-40 text-right">
-            [ SYSTEM_LOG: CAREER_HISTORY ]
-          </div>
-          
-          <AnimatedText 
-            text="EXPERIENCE"
-            className="py-0"
-            textClassName="text-huge leading-none py-0"
-          />
+        <div className="border border-blue-500/20 bg-black p-8 md:p-16 mb-16 relative text-center group">
+          <h1 className="text-huge leading-none py-0 font-bold uppercase text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-500 to-white bg-[length:200%_auto] group-hover:animate-[shimmer_3s_linear_infinite] transition-all">
+            Experience
+          </h1>
           
           <div className="mt-4 font-mono text-xs text-blue-500 uppercase tracking-widest">
-            [ LOADING_EXPERIENCE_MODULES... DONE ]
+            Professional journey and research history.
           </div>
         </div>
 

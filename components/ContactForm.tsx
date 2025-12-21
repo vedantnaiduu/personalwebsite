@@ -52,7 +52,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-2">
           <label htmlFor="name" className="font-mono text-[10px] text-blue-500 uppercase tracking-widest">
-            {`// SENDER_NAME`}
+            Name
           </label>
           <input
             type="text"
@@ -62,13 +62,13 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             className="w-full bg-black border border-white/10 px-4 py-4 text-white font-mono text-sm focus:outline-none focus:border-blue-600 transition-colors"
-            placeholder="John Doe"
+            placeholder="Your Name"
           />
         </div>
 
         <div className="space-y-2">
           <label htmlFor="email" className="font-mono text-[10px] text-blue-500 uppercase tracking-widest">
-            {`// SENDER_EMAIL`}
+            Email
           </label>
           <input
             type="email"
@@ -78,14 +78,14 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             className="w-full bg-black border border-white/10 px-4 py-4 text-white font-mono text-sm focus:outline-none focus:border-blue-600 transition-colors"
-            placeholder="john@system.com"
+            placeholder="email@example.com"
           />
         </div>
       </div>
 
       <div className="space-y-2">
         <label htmlFor="message" className="font-mono text-[10px] text-blue-500 uppercase tracking-widest">
-          {`// MESSAGE_BODY`}
+          Message
         </label>
         <textarea
           id="message"
@@ -95,7 +95,7 @@ export default function ContactForm() {
           required
           rows={8}
           className="w-full bg-black border border-white/10 px-4 py-4 text-white font-mono text-sm focus:outline-none focus:border-blue-600 transition-colors resize-none"
-          placeholder="Enter message text here..."
+          placeholder="What's on your mind?"
         />
       </div>
 

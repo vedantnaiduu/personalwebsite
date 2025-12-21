@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import { AnimatedText } from '@/components/ui/animated-shiny-text';
 
 const navItems = [
   { name: 'Home', href: '/', id: '00' },
@@ -22,24 +23,26 @@ export default function Navigation() {
         
         {/* Brand Cell */}
         <div className="col-span-1 md:col-span-3 border-r border-blue-500/20 flex items-center px-6 md:px-10">
-          <Link href="/" className="font-mono text-xl font-bold tracking-tighter flex items-center gap-2">
-            <div className="w-6 h-6 bg-blue-600 flex items-center justify-center text-[10px] text-white">VN</div>
-            <span className="hidden md:inline uppercase">Vedant Naidu</span>
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-8 h-8 bg-blue-600 flex items-center justify-center text-[12px] text-white font-mono font-bold">VN</div>
+            <span className="hidden md:block font-bold uppercase text-sm tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-400 to-white bg-[length:200%_auto] hover:animate-[shimmer_2s_linear_infinite] transition-all">
+              Vedant Naidu
+            </span>
           </Link>
         </div>
 
         {/* Desktop Navigation Cells */}
-        <div className="hidden md:flex col-span-9 divide-x divide-blue-500/20">
+        <div className="hidden md:flex col-span-9 divide-x divide-blue-500/20 overflow-hidden">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`flex-1 flex flex-col justify-center px-6 group transition-colors hover:bg-blue-600/5 ${
+              className={`flex-1 flex flex-col justify-center px-4 group transition-colors hover:bg-blue-600/5 ${
                 pathname === item.href ? 'bg-blue-600/10' : ''
               }`}
             >
-              <span className="font-mono text-[10px] opacity-40 mb-1">[{item.id}]</span>
-              <span className={`font-bold uppercase text-xs tracking-widest ${
+              <span className="font-mono text-[9px] opacity-40 mb-0.5 tracking-tighter">[{item.id}]</span>
+              <span className={`font-sans font-bold uppercase text-[10px] tracking-[0.15em] ${
                 pathname === item.href ? 'text-blue-500' : 'text-white'
               }`}>
                 {item.name}

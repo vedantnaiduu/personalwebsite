@@ -5,6 +5,7 @@ import { Typewriter } from '@/components/ui/typewriter';
 import Link from 'next/link';
 import SystemLog from '@/components/SystemLog';
 import SquigglyWave from '@/components/SquigglyWave';
+import { AnimatedText } from '@/components/ui/animated-shiny-text';
 
 export default function Hero() {
   return (
@@ -16,18 +17,10 @@ export default function Hero() {
         <div className="col-span-full md:col-span-12 p-8 md:p-16 bg-black flex flex-col justify-end min-h-[50vh] relative overflow-hidden border-b border-blue-500/20 group">
           <div className="absolute inset-0 diagonal-hatching opacity-5" />
           
-          <motion.h1 
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-huge relative z-10 text-white"
-          >
-            VEDANT<br />
-            NAIDU
-          </motion.h1>
-          
-          <div className="absolute top-4 right-8 font-mono text-[10px] uppercase opacity-40">
-            [ RESEARCHER // DEVELOPER ]
+          <div className="relative z-10 text-left -ml-4 md:-ml-8">
+            <h1 className="text-huge leading-[0.8] py-0 font-bold uppercase text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-500 to-white bg-[length:200%_auto] group-hover:animate-[shimmer_3s_linear_infinite] transition-all">
+              Vedant<br />Naidu
+            </h1>
           </div>
           
           <div className="absolute bottom-4 right-8 hidden md:block">
@@ -44,15 +37,15 @@ export default function Hero() {
             className="max-w-2xl"
           >
             <SquigglyWave className="mb-6 h-6" opacity={0.15} />
-            <p className="font-serif text-2xl md:text-3xl leading-tight mb-8">
-              Computer Science student at UMass Amherst. Building tools at the intersection of human systems and ai.
-            </p>
+                <p className="font-sans text-2xl md:text-3xl leading-tight mb-8 font-bold">
+                  CS student at UMass Amherst. Building tools at the intersection of Human Systems and AI.
+                </p>
             
             <div className="font-mono text-xs uppercase tracking-widest text-blue-500">
               <Typewriter
                 text={[
                   "COMPUTATIONAL BIOLOGY",
-                  "MACHINE LEARNING",
+                  "HUMAN SYSTEMS AND AI",
                   "FULL-STACK ENGINEERING"
                 ]}
                 speed={50}
