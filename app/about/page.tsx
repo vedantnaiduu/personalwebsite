@@ -37,7 +37,7 @@ export default function About() {
             >
               <p className="first-letter:text-7xl first-letter:font-bold first-letter:text-blue-600 first-letter:mr-4 first-letter:float-left first-letter:leading-none">
                 I am a Computer Science student at UMass Amherst, currently exploring the intersection of 
-                machine learning, full-stack development, and computational biology. I&apos;ve been fortunate 
+                human systems and ai, full-stack development, and computational biology. I&apos;ve been fortunate 
                 enough to work on projects ranging from healthcare analytics to EEG foundation models.
               </p>
 

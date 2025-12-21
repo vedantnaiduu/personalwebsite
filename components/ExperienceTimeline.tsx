@@ -34,7 +34,7 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
             {/* Date/Period Cell */}
             <div className="md:col-span-3 p-6 border-b md:border-b-0 md:border-r border-blue-500/20 flex flex-col justify-center">
               <span className="font-mono text-[10px] text-blue-500 mb-2 uppercase tracking-widest">
-                // {exp.period}
+                {`// ${exp.period}`}
               </span>
               <span className="font-mono text-[8px] opacity-30 uppercase">
                 ENTRY_ID: {index < 9 ? `00${index + 1}` : index + 1}

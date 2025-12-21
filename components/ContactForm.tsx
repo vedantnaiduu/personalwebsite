@@ -52,7 +52,7 @@ export default function ContactForm() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-2">
           <label htmlFor="name" className="font-mono text-[10px] text-blue-500 uppercase tracking-widest">
-            // SENDER_NAME
+            {`// SENDER_NAME`}
           </label>
           <input
             type="text"
@@ -68,7 +68,7 @@ export default function ContactForm() {
 
         <div className="space-y-2">
           <label htmlFor="email" className="font-mono text-[10px] text-blue-500 uppercase tracking-widest">
-            // SENDER_EMAIL
+            {`// SENDER_EMAIL`}
           </label>
           <input
             type="email"
@@ -85,7 +85,7 @@ export default function ContactForm() {
 
       <div className="space-y-2">
         <label htmlFor="message" className="font-mono text-[10px] text-blue-500 uppercase tracking-widest">
-          // MESSAGE_BODY
+          {`// MESSAGE_BODY`}
         </label>
         <textarea
           id="message"

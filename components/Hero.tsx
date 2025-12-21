@@ -45,7 +45,7 @@ export default function Hero() {
           >
             <SquigglyWave className="mb-6 h-6" opacity={0.15} />
             <p className="font-serif text-2xl md:text-3xl leading-tight mb-8">
-              Computer Science student at UMass Amherst. Building tools at the intersection of machine learning and human systems.
+              Computer Science student at UMass Amherst. Building tools at the intersection of human systems and ai.
             </p>
             
             <div className="font-mono text-xs uppercase tracking-widest text-blue-500">

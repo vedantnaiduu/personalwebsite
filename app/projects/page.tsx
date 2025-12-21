@@ -84,9 +84,9 @@ export default function Projects() {
 
         {/* Technical Footer */}
         <div className="mt-24 pt-12 border-t border-blue-500/20 grid grid-cols-1 md:grid-cols-3 gap-8 opacity-30 font-mono text-[10px] uppercase">
-          <div>// TOTAL_PROJECTS_LISTED: {projects.length}</div>
-          <div>// LAST_UPDATED: 2025_12_21</div>
-          <div>// REPOSITORY_STATUS: PUBLIC</div>
+          <div>{`// TOTAL_PROJECTS_LISTED: ${projects.length}`}</div>
+          <div>{`// LAST_UPDATED: 2025_12_21`}</div>
+          <div>{`// REPOSITORY_STATUS: PUBLIC`}</div>
         </div>
 
       </div>

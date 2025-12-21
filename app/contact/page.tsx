@@ -70,9 +70,9 @@ export default function Contact() {
             </Link>
 
             <div className="p-10 font-mono text-[10px] opacity-30 uppercase space-y-2">
-              <div>// LATENCY: 24MS</div>
-              <div>// ENCRYPTION: AES-256</div>
-              <div>// STATUS: STANDBY</div>
+              <div>{`// LATENCY: 24MS`}</div>
+              <div>{`// ENCRYPTION: AES-256`}</div>
+              <div>{`// STATUS: STANDBY`}</div>
             </div>
 
           </div>
