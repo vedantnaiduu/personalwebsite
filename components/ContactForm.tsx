@@ -20,10 +20,11 @@ export default function ContactForm() {
     setStatus({ type: 'loading' });
 
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch('https://formspree.io/f/xvgzgeeo', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData),
       });
