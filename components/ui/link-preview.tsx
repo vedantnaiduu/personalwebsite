@@ -74,7 +74,7 @@ function usePreviewSource(
 
         return `https://api.microlink.io/?${params}`;
 
-    }, [isStatic, staticImageSrc, url, width, height, quality]); // Recalculate only if these change.
+    }, [isStatic, staticImageSrc, url, width, height]); // Recalculate only if these change.
 
 }
 
