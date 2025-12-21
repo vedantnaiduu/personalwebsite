@@ -17,7 +17,7 @@ const projects = [
       'Optimized AI response times using async data fetching, caching, and fire-and-forget techniques'
     ],
     technologies: ['Node.js', 'TypeScript', 'Next.js', 'Apache Kafka', 'OpenAI', 'Supabase', 'Polymarket', 'Reddit MCP'],
-    image: '/images/projects/social-oracle.png',
+    image: '/images/projects/retrocare.png',
     link: 'https://shipyardhq.tech/projects/8d32e889-dfad-45c4-9000-a09970cb6265',
     github: 'https://github.com/TCYTseven/serieshax',
   },
@@ -51,7 +51,7 @@ const projects = [
       'Created a production-ready caregiver mission-control dashboard using Expo Router and React Query'
     ],
     technologies: ['React Native', 'Expo', 'Node.js', 'VAPI', 'ElevenLabs', 'Supabase', 'TypeScript', 'React Query'],
-    image: '/images/projects/retrocare.png',
+    image: '/images/projects/social-oracle.png',
     link: 'https://devpost.com/software/retrocare',
     github: 'https://github.com/RavjeetChahal/RetroCare',
   },
