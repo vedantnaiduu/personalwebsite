@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { GlowingEffect } from '@/components/ui/glowing-effect';
 
 interface ExperienceItem {
   title: string;
@@ -18,65 +17,58 @@ interface ExperienceTimelineProps {
 
 export default function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
   return (
-    <div className="relative max-w-4xl mx-auto px-6">
-      {/* Vertical line */}
-      <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-accent-blue/20 transform md:-translate-x-1/2" />
+    <div className="relative max-w-5xl mx-auto px-4">
+      {/* Structural Divide */}
+      <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-blue-500/20 transform md:-translate-x-1/2" />
 
-      {experiences.map((exp, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, delay: index * 0.1 }}
-          className={`relative mb-12 ${
-            index % 2 === 0 ? 'md:pr-[calc(50%+2rem)] md:pl-0' : 'md:pl-[calc(50%+2rem)] md:pr-0'
-          }`}
-        >
-          {/* Timeline node */}
-          <div className="absolute left-8 md:left-1/2 w-4 h-4 bg-accent-blue rounded-full border-4 border-background-dark transform md:-translate-x-1/2 -translate-x-1/2 top-2 z-10" />
+      <div className="space-y-px bg-blue-500/20 border border-blue-500/20">
+        {experiences.map((exp, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className="grid grid-cols-1 md:grid-cols-12 bg-black overflow-hidden"
+          >
+            {/* Date/Period Cell */}
+            <div className="md:col-span-3 p-6 border-b md:border-b-0 md:border-r border-blue-500/20 flex flex-col justify-center">
+              <span className="font-mono text-[10px] text-blue-500 mb-2 uppercase tracking-widest">
+                // {exp.period}
+              </span>
+              <span className="font-mono text-[8px] opacity-30 uppercase">
+                ENTRY_ID: {index < 9 ? `00${index + 1}` : index + 1}
+              </span>
+            </div>
 
-          {/* Content card */}
-          <div className="ml-16 md:ml-0 liquid-glass p-8 hover:border-accent-blue/40 transition-all duration-500 relative group rounded-2xl overflow-visible shadow-2xl">
-            <GlowingEffect
-              variant="blue"
-              spread={40}
-              glow={true}
-              disabled={false}
-              proximity={64}
-              inactiveZone={0.3}
-              borderWidth={2}
-            />
-            {/* Geometric accent */}
-            <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-accent-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
-
-            <div className="relative z-10">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-3">
+            {/* Content Cell */}
+            <div className="md:col-span-9 p-8 md:p-12">
+              <div className="flex flex-col md:flex-row md:items-start justify-between mb-8">
                 <div>
-                  <h3 className="text-xl md:text-2xl text-accent-blue font-bold leading-tight mb-1">{exp.title}</h3>
-                  <p className="text-text-primary font-semibold">{exp.company}</p>
-                  {exp.location && (
-                    <p className="text-text-secondary text-sm mt-1">{exp.location}</p>
-                  )}
+                  <h3 className="text-3xl md:text-4xl font-bold uppercase tracking-tighter text-white mb-2">
+                    {exp.title}
+                  </h3>
+                  <p className="font-mono text-xs uppercase tracking-widest text-blue-500">
+                    {exp.company} <span className="opacity-30">|</span> {exp.location}
+                  </p>
                 </div>
-                <span className="text-text-secondary text-sm mt-1 md:mt-0 whitespace-nowrap">{exp.period}</span>
               </div>
 
-              <ul className="space-y-2 mb-4">
+              <ul className="space-y-4 mb-10">
                 {exp.description.map((item, i) => (
-                  <li key={i} className="text-text-secondary text-sm flex items-start">
-                    <span className="text-accent-blue mr-2">▹</span>
+                  <li key={i} className="font-serif text-lg text-white/70 flex items-start">
+                    <span className="text-blue-600 mr-4 font-mono text-sm mt-1">[{i+1}]</span>
                     {item}
                   </li>
                 ))}
               </ul>
 
               {exp.technologies && (
-                <div className="flex flex-wrap gap-2 mt-4">
+                <div className="flex flex-wrap gap-2 pt-6 border-t border-white/5">
                   {exp.technologies.map((tech) => (
                     <span
                       key={tech}
-                      className="px-2 py-1 text-xs bg-white/5 text-accent-blue border border-white/10 rounded-lg"
+                      className="px-3 py-1 font-mono text-[9px] uppercase border border-blue-500/20 text-blue-500/60"
                     >
                       {tech}
                     </span>
@@ -84,10 +76,9 @@ export default function ExperienceTimeline({ experiences }: ExperienceTimelinePr
                 </div>
               )}
             </div>
-          </div>
-        </motion.div>
-      ))}
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }
-

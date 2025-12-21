@@ -2,11 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
 
 :root {
-  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-inter: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-blue-primary: #0055FF;
+  --color-blue-deep: #001133;
+  --color-bg: #000000;
+  --color-text: #ffffff;
+  --grid-line: rgba(0, 85, 255, 0.2);
 }
 
 * {
@@ -21,139 +27,109 @@ html {
 
 body {
   font-family: var(--font-inter);
-  background-color: #0a0a0a;
-  color: #ffffff;
-  line-height: 1.6;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-inter);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+/* Subtle grain texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 9999;
 }
 
-p, span, div, a, button {
-  font-family: var(--font-inter);
+/* Structural Grid */
+.brutalist-grid {
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.grid-cell {
+  border: 1px solid var(--grid-line);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
 }
 
 .font-serif {
-  font-family: var(--font-inter);
+  font-family: var(--font-serif);
 }
 
-.font-sans {
-  font-family: var(--font-inter);
+/* Massive Headers */
+.text-huge {
+  font-size: clamp(4rem, 15vw, 12rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.3);
-  border-radius: 4px;
+  background: var(--color-blue-primary);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.5);
-}
-
-/* Geometric pattern utilities */
-.geometric-pattern {
-  background-image: 
-    linear-gradient(45deg, rgba(59, 130, 246, 0.05) 25%, transparent 25%),
-    linear-gradient(-45deg, rgba(59, 130, 246, 0.05) 25%, transparent 25%),
-    linear-gradient(45deg, transparent 75%, rgba(59, 130, 246, 0.05) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(59, 130, 246, 0.05) 75%);
-  background-size: 20px 20px;
-  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-}
-
-/* Golden ratio grid lines */
-.golden-grid-lines::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
-  background-size: 61.8px 100px;
-  pointer-events: none;
-}
-
-/* Selection color */
+/* Selection */
 ::selection {
-  background-color: rgba(59, 130, 246, 0.3);
+  background-color: var(--color-blue-primary);
   color: #ffffff;
 }
 
-/* Glassmorphism utilities */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px) saturate(180%);
-  -webkit-backdrop-filter: blur(12px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.liquid-glass {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.01) 100%
+/* Diagonal Hatching Pattern */
+.diagonal-hatching {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--grid-line),
+    var(--grid-line) 1px,
+    transparent 1px,
+    transparent 10px
   );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-.glow-line {
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(59, 130, 246, 0.5) 50%,
-    transparent 100%
-  );
-  filter: blur(1px);
+.perspective-grid {
+  perspective: 1000px;
 }
 
-/* Focus styles */
-*:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
+.perspective-inner {
+  transform: rotateX(20deg) rotateY(-10deg);
 }
 
-/* Smooth transitions */
-* {
-  transition-property: color, background-color, border-color, opacity, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+/* Scanning line effect */
+.scan-line {
+  width: 100%;
+  height: 2px;
+  background: var(--color-blue-primary);
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: scan 4s linear infinite;
+  pointer-events: none;
 }
 
-/* Interactive cursor effects */
-@media (hover: hover) {
-  a, button {
-    cursor: pointer;
-  }
-}
-
-/* Smooth scroll behavior */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Enhanced focus styles */
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 4px;
-  border-radius: 2px;
+@keyframes scan {
+  0% { top: 0; }
+  100% { top: 100%; }
 }
 

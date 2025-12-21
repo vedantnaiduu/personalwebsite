@@ -15,16 +15,16 @@ const config: Config = {
     extend: {
       colors: {
         background: {
-          dark: "#0a0a0a",
-          elevated: "#1a1a1a",
+          dark: "#000000",
+          deep: "#001133",
         },
         accent: {
-          blue: "#3b82f6",
-          "blue-light": "#60a5fa",
+          blue: "#0055FF",
+          "blue-intense": "#002FA7",
         },
         text: {
           primary: "#ffffff",
-          secondary: "#a0a0a0",
+          secondary: "#888888",
         },
       },
       spacing: {
@@ -42,8 +42,9 @@ const config: Config = {
         "phi-4": "109.664px", // 67.776 * 1.618
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        serif: ["var(--font-serif)", "serif"],
+        sans: ["Inter", "system-ui", "sans-serif"],
+        serif: ["'Playfair Display'", "serif"],
+        mono: ["'JetBrains Mono'", "monospace"],
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-in-out",

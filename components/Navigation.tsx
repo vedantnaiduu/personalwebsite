@@ -3,85 +3,52 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'About', href: '/about' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'Experience', href: '/experience' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Home', href: '/', id: '00' },
+  { name: 'About', href: '/about', id: '01' },
+  { name: 'Projects', href: '/projects', id: '02' },
+  { name: 'Experience', href: '/experience', id: '03' },
+  { name: 'Contact', href: '/contact', id: '04' },
 ];
 
 export default function Navigation() {
-  const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const pathname = usePathname();
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
-    >
-      <div className="glass-panel rounded-full px-12 py-4 flex items-center justify-between shadow-2xl backdrop-blur-xl w-full max-w-5xl pointer-events-auto">
-        <Link href="/" className="text-accent-blue font-bold text-2xl tracking-tight hover:opacity-80 transition-opacity">
-          Portfolio
-        </Link>
+    <nav className="fixed top-0 left-0 right-0 z-[100] bg-black border-b border-blue-500/20">
+      <div className="grid grid-cols-2 md:grid-cols-12 h-16 md:h-20">
         
-        <div className="hidden md:flex items-center space-x-12">
+        {/* Brand Cell */}
+        <div className="col-span-1 md:col-span-3 border-r border-blue-500/20 flex items-center px-6 md:px-10">
+          <Link href="/" className="font-mono text-xl font-bold tracking-tighter flex items-center gap-2">
+            <div className="w-6 h-6 bg-blue-600 flex items-center justify-center text-[10px] text-white">VN</div>
+            <span className="hidden md:inline uppercase">Vedant Naidu</span>
+          </Link>
+        </div>
+
+        {/* Desktop Navigation Cells */}
+        <div className="hidden md:flex col-span-9 divide-x divide-blue-500/20">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="relative text-text-secondary hover:text-accent-blue font-medium text-sm transition-colors duration-300 group tracking-wide uppercase"
-              onMouseEnter={() => setActiveSection(item.name)}
-              onMouseLeave={() => setActiveSection('')}
+              className={`flex-1 flex flex-col justify-center px-6 group transition-colors hover:bg-blue-600/5 ${
+                pathname === item.href ? 'bg-blue-600/10' : ''
+              }`}
             >
-              {item.name}
-              <motion.div
-                className="absolute -bottom-1 left-0 h-0.5 bg-accent-blue"
-                initial={{ width: 0 }}
-                animate={{
-                  width: activeSection === item.name ? '100%' : 0,
-                }}
-                transition={{ duration: 0.3 }}
-              />
+              <span className="font-mono text-[10px] opacity-40 mb-1">[{item.id}]</span>
+              <span className={`font-bold uppercase text-xs tracking-widest ${
+                pathname === item.href ? 'text-blue-500' : 'text-white'
+              }`}>
+                {item.name}
+              </span>
             </Link>
           ))}
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden text-text-primary"
-          aria-label="Toggle navigation menu"
-          aria-expanded="false"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
       </div>
-    </motion.nav>
+    </nav>
   );
 }
-

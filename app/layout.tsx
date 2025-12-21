@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
-import GeometricBackground from "@/components/GeometricBackground";
-import GoldenRatioGrid from "@/components/GoldenRatioGrid";
+import GenerativeMoiré from "@/components/GenerativeMoiré";
 
 export const metadata: Metadata = {
-  title: "Vedant Naidu - Computer Science Student & ML Researcher",
-  description: "Computer Science student at UMass Amherst (4.0 GPA) | ML Research Fellow | Computational Biology Researcher at Stanford | Award-winning hackathon projects",
+  title: "Vedant Naidu - Brutalist Developer & Researcher",
+  description: "Computer Science student at UMass Amherst (4.0 GPA) | Computational Biology Researcher at Stanford | Award-winning hackathon projects",
 };
 
 export default function RootLayout({
@@ -15,12 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <GeometricBackground />
-        <GoldenRatioGrid />
+    <html lang="en" className="bg-black">
+      <body className="antialiased selection:bg-blue-600 selection:text-white">
+        <GenerativeMoiré />
         <Navigation />
-        <main className="relative z-10 bg-background-dark">{children}</main>
+        <main className="relative z-10">{children}</main>
       </body>
     </html>
   );
