@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { HoverPeek } from '@/components/ui/link-preview';
 import { AwardBadge } from '@/components/ui/award-badge';
+import { prefixPath } from '@/lib/utils';
 
 interface ProjectCardProps {
   title: string;
@@ -52,7 +53,7 @@ export default function ProjectCard({
       {image && (
         <div className="relative aspect-[21/9] border-b border-blue-500/20 grayscale hover:grayscale-0 transition-all duration-500 overflow-hidden group/img">
           <Image
-            src={image}
+            src={prefixPath(image)}
             alt={imageAlt || title}
             fill
             className="object-cover group-hover/img:scale-105 transition-transform duration-700"

@@ -20,7 +20,7 @@ import {
 
 } from "framer-motion";
 
-import { cn } from "@/lib/utils";
+import { cn, prefixPath } from "@/lib/utils";
 
 // A little helper hook to figure out the image source, whether it's static or needs fetching from Microlink.
 
@@ -43,9 +43,7 @@ function usePreviewSource(
     return useMemo(() => {
 
         if (isStatic) {
-
-            return staticImageSrc || ""; // Just use the provided static image.
-
+            return prefixPath(staticImageSrc || ""); // Just use the provided static image with prefix if needed.
         }
 
         // Build the Microlink URL if we need a dynamic screenshot.

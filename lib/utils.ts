@@ -44,3 +44,14 @@ export function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
 }
 
+/**
+ * Prefix a path with the base path for production
+ */
+export function prefixPath(path: string): string {
+  const basePath = process.env.NODE_ENV === 'production' ? '/personalwebsite' : '';
+  if (path.startsWith('/') && !path.startsWith(basePath)) {
+    return `${basePath}${path}`;
+  }
+  return path;
+}
+
