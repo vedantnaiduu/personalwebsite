@@ -1,10 +1,5 @@
 import type { Config } from "tailwindcss";
 
-const GOLDEN_RATIO = 1.618;
-
-// Golden ratio spacing scale
-const goldenSpacing = (n: number) => `${8 * Math.pow(GOLDEN_RATIO, n)}px`;
-
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,44 +9,65 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: {
-          dark: "#000000",
-          deep: "#001133",
+        aero: {
+          sky: "var(--aero-sky)",
+          blue: "var(--aero-blue)",
+          deep: "var(--aero-deep)",
+          ink: "var(--aero-ink)",
+          green: "var(--aero-green)",
+          lime: "var(--aero-lime)",
         },
+        glass: {
+          white: "var(--glass-white)",
+          border: "var(--glass-border)",
+        },
+        y2k: {
+          magenta: "var(--y2k-magenta)",
+          acid: "var(--y2k-acid)",
+        },
+        background: {
+          DEFAULT: "hsl(var(--background))",
+          dark: "var(--aero-ink)",
+          deep: "var(--aero-deep)",
+        },
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        ring: "hsl(var(--ring))",
         accent: {
-          blue: "#0055FF",
-          "blue-intense": "#002FA7",
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+          blue: "var(--aero-blue)",
+          "blue-intense": "var(--aero-deep)",
         },
         text: {
-          primary: "#ffffff",
-          secondary: "#888888",
+          primary: "var(--aero-ink)",
+          secondary: "rgba(6, 42, 74, 0.72)",
         },
       },
-      spacing: {
-        phi: goldenSpacing(0),
-        "phi-2": goldenSpacing(1),
-        "phi-3": goldenSpacing(2),
-        "phi-4": goldenSpacing(3),
-        "phi-5": goldenSpacing(4),
-      },
-      fontSize: {
-        "phi-base": "16px",
-        "phi-1": "25.888px", // 16 * 1.618
-        "phi-2": "41.888px", // 25.888 * 1.618
-        "phi-3": "67.776px", // 41.888 * 1.618
-        "phi-4": "109.664px", // 67.776 * 1.618
+      borderRadius: {
+        glass: "10px",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        serif: ["'Playfair Display'", "serif"],
-        mono: ["'JetBrains Mono'", "monospace"],
+        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "'JetBrains Mono'", "monospace"],
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-in-out",
         "slide-up": "slideUp 0.6s ease-out",
-        "geometric-pulse": "geometricPulse 3s ease-in-out infinite",
-        "background-gradient":
-          "background-gradient var(--background-gradient-speed, 15s) cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite",
+        "aero-float": "aeroFloat 14s ease-in-out infinite",
+        "chrome-shine": "chromeShine 5s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: {
@@ -62,36 +78,30 @@ const config: Config = {
           "0%": { transform: "translateY(20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
-        geometricPulse: {
-          "0%, 100%": { opacity: "0.1" },
-          "50%": { opacity: "0.3" },
-        },
-        "background-gradient": {
+        aeroFloat: {
           "0%, 100%": {
-            transform: "translate(0, 0)",
-            animationDelay: "var(--background-gradient-delay, 0s)",
+            transform: "translate3d(0, 0, 0) scale(1)",
           },
-          "20%": {
-            transform:
-              "translate(calc(100% * var(--tx-1, 1)), calc(100% * var(--ty-1, 1)))",
-          },
-          "40%": {
-            transform:
-              "translate(calc(100% * var(--tx-2, -1)), calc(100% * var(--ty-2, 1)))",
-          },
-          "60%": {
-            transform:
-              "translate(calc(100% * var(--tx-3, 1)), calc(100% * var(--ty-3, -1)))",
-          },
-          "80%": {
-            transform:
-              "translate(calc(100% * var(--tx-4, -1)), calc(100% * var(--ty-4, -1)))",
+          "50%": {
+            transform: "translate3d(0, -12px, 0) scale(1.02)",
           },
         },
+        chromeShine: {
+          "0%, 100%": {
+            backgroundPosition: "0% 50%",
+          },
+          "50%": {
+            backgroundPosition: "100% 50%",
+          },
+        },
+      },
+      boxShadow: {
+        glass:
+          "0 24px 70px rgba(0, 80, 160, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -18px 36px rgba(105, 207, 255, 0.12)",
+        glow: "0 0 32px rgba(105, 207, 255, 0.32)",
       },
     },
   },
   plugins: [],
 };
 export default config;
-

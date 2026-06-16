@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'i.scdn.co',
+      },
+    ],
   },
-  basePath: process.env.NODE_ENV === 'production' ? '/personalwebsite' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/personalwebsite' : '',
 }
 
 module.exports = nextConfig
-

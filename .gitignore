@@ -34,3 +34,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+
+# research scratch (Scrapling venv + raw scrape output)
+research/.venv/
+research/scrape_output.json
+research/__pycache__/

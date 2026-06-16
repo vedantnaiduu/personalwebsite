@@ -1,0 +1,24 @@
+Scraping httpster.net ...
+[2026-06-15 22:05:25] INFO: Fetched (200) <GET https://httpster.net/> (referer: https://www.google.com/)
+[2026-06-15 22:05:27] INFO: Fetched (200) <GET https://httpster.net/page/2/> (referer: https://www.google.com/)
+[2026-06-15 22:05:29] INFO: Fetched (200) <GET https://httpster.net/page/3/> (referer: https://www.google.com/)
+Scraping godly.website ...
+[2026-06-15 22:05:31] INFO: Fetched (200) <GET https://godly.website/> (referer: https://www.google.com/)
+[2026-06-15 22:05:33] INFO: Fetched (404) <GET https://godly.website/websites/portfolio> (referer: https://www.google.com/)
+  [godly] status 404 for https://godly.website/websites/portfolio
+[2026-06-15 22:05:33] INFO: Fetched (404) <GET https://godly.website/websites/retro> (referer: https://www.google.com/)
+  [godly] status 404 for https://godly.website/websites/retro
+[2026-06-15 22:05:33] INFO: Fetched (404) <GET https://godly.website/websites/brutalism> (referer: https://www.google.com/)
+  [godly] status 404 for https://godly.website/websites/brutalism
+[2026-06-15 22:05:33] INFO: Fetched (404) <GET https://godly.website/websites/playful> (referer: https://www.google.com/)
+  [godly] status 404 for https://godly.website/websites/playful
+[2026-06-15 22:05:34] INFO: Fetched (404) <GET https://godly.website/websites/colorful> (referer: https://www.google.com/)
+  [godly] status 404 for https://godly.website/websites/colorful
+Scraping land-book.com ...
+[2026-06-15 22:05:34] INFO: Fetched (200) <GET https://land-book.com/> (referer: https://www.google.com/)
+[2026-06-15 22:05:35] INFO: Fetched (404) <GET https://land-book.com/websites/style-retro> (referer: https://www.google.com/)
+  [land-book] status 404 for https://land-book.com/websites/style-retro
+[2026-06-15 22:05:36] INFO: Fetched (404) <GET https://land-book.com/websites/category-portfolio> (referer: https://www.google.com/)
+  [land-book] status 404 for https://land-book.com/websites/category-portfolio
+
+Total unique sites scraped: 122
