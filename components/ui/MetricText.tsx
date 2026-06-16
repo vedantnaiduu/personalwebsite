@@ -12,7 +12,7 @@ export function MetricText({ text }: MetricTextProps) {
     <>
       {parts.map((part, index) =>
         index % 2 === 1 ? (
-          <strong key={`${part}-${index}`} className="font-black text-aero-ink">
+          <strong key={`${part}-${index}`} className="font-black text-text">
             {part}
           </strong>
         ) : (

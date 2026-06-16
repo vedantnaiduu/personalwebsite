@@ -1,52 +1,60 @@
-import { MetricText } from "@/components/ui/MetricText";
+import { SectionShell } from "@/components/sections/SectionShell";
 import { experience } from "@/lib/site-data";
+
+const metricPattern = /(\b\d[\d,]*(?:\.\d+)?%?\+?\b)/g;
+
+function MetricNumbers({ text }: { readonly text: string }) {
+  return (
+    <>
+      {text.split(metricPattern).map((part, index) =>
+        index % 2 === 1 ? (
+          <strong key={`${part}-${index}`} className="font-semibold text-text">
+            {part}
+          </strong>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
 
 export function Experience() {
   return (
-    <section id="experience" className="scroll-mt-28 py-8" aria-labelledby="experience-title">
-      <div className="glass grid gap-6 px-5 py-8 sm:px-8 md:grid-cols-[14rem_minmax(0,1fr)] md:items-start">
-        <div>
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-aero-deep/72">
-            02 / proof
-          </p>
-          <h2 id="experience-title" className="mt-3 text-3xl font-black tracking-normal text-aero-ink sm:text-4xl">
-            Experience
-          </h2>
-        </div>
+    <SectionShell id="experience" eyebrow="› experience" title="Experience">
+      <div className="border-b border-line">
+        {experience.map((role) => (
+          <article
+            key={`${role.role}-${role.organization}`}
+            className="grid gap-5 border-t border-line py-8 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10 md:py-10"
+          >
+            <div className="font-mono text-[0.7rem] uppercase tracking-[0.09em] text-text-faint">
+              <p>{role.dates}</p>
+              <p className="mt-3 max-w-[13rem] text-text-muted">{role.organization}</p>
+              <p className="mt-2">{role.location}</p>
+            </div>
 
-        <div className="relative grid gap-5 before:absolute before:left-3 before:top-2 before:hidden before:h-[calc(100%-1rem)] before:w-px before:bg-aero-deep/18 sm:before:block">
-          {experience.map((role) => (
-            <article key={`${role.role}-${role.organization}`} className="relative sm:pl-10">
-              <span
-                className="absolute left-[0.44rem] top-2 hidden h-3 w-3 rounded-full border border-white bg-aero-blue shadow-[0_0_18px_rgba(56,171,228,0.44)] sm:block"
-                aria-hidden="true"
-              />
-              <div className="rounded-lg border border-white/70 bg-white/44 px-4 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]">
-                <div className="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
-                  <div>
-                    <h3 className="text-lg font-black leading-tight text-aero-ink">{role.role}</h3>
-                    <p className="mt-1 font-bold text-aero-deep">{role.organization}</p>
-                    <p className="mt-1 text-sm font-semibold text-aero-ink/68">{role.location}</p>
-                  </div>
-                  <p className="shrink-0 rounded-full border border-white/75 bg-white/52 px-3 py-1.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] text-aero-deep">
-                    {role.dates}
-                  </p>
-                </div>
-                <ul className="mt-4 grid gap-3">
-                  {role.bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-3 text-sm leading-7 text-aero-ink/78">
-                      <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-aero-green" aria-hidden="true" />
-                      <span>
-                        <MetricText text={bullet} />
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
+            <div>
+              <h3 className="text-[clamp(1.45rem,2.6vw,2.35rem)] font-medium leading-[1.05] tracking-[-0.03em] text-text">
+                {role.role}
+              </h3>
+              <ul className="mt-6 grid gap-4">
+                {role.bullets.map((bullet) => (
+                  <li
+                    key={bullet}
+                    className="grid grid-cols-[0.55rem_minmax(0,1fr)] gap-4 text-base leading-7 text-text-muted sm:text-lg sm:leading-8"
+                  >
+                    <span className="mt-[0.78em] h-px bg-line" aria-hidden="true" />
+                    <span>
+                      <MetricNumbers text={bullet} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
       </div>
-    </section>
+    </SectionShell>
   );
 }

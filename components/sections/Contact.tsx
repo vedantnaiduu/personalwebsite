@@ -1,11 +1,16 @@
 "use client";
 
-import { Check, Copy, FileText, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-import { WindowFrame } from "@/components/ui/WindowFrame";
+import { SectionShell } from "@/components/sections/SectionShell";
 import { identity } from "@/lib/site-data";
+
+const links = [
+  { label: "GitHub", href: identity.github },
+  { label: "LinkedIn", href: identity.linkedin },
+  { label: "Résumé", href: identity.resumePdf },
+] as const;
 
 export function Contact() {
   const [copied, setCopied] = useState(false);
@@ -21,73 +26,37 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="scroll-mt-28 py-8" aria-labelledby="contact-title">
-      <div className="grid gap-6 md:grid-cols-[14rem_minmax(0,1fr)] md:items-start">
-        <div>
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-aero-deep/72">
-            06 / contact
-          </p>
-          <h2 id="contact-title" className="mt-3 text-3xl font-black tracking-normal text-aero-ink sm:text-4xl">
-            Contact
-          </h2>
-        </div>
+    <SectionShell id="contact" eyebrow="› contact" title="Say hello">
+      <div className="grid max-w-[46rem] gap-8">
+        <p className="text-[clamp(1.35rem,2.4vw,2rem)] leading-[1.45] tracking-[-0.02em] text-text-muted">
+          If you are building AI systems that need to make it past the demo table, I would like to
+          hear about it.
+        </p>
 
-        <WindowFrame title="contact.sys" bodyClassName="grid gap-5">
-          <div className="max-w-2xl">
-            <p className="text-lg font-black leading-tight text-aero-ink">
-              Want to talk AI systems, applied research, or a project that needs to ship?
-            </p>
-            <p className="mt-3 text-sm font-semibold leading-7 text-aero-ink/76">
-              Email is the fastest path. Résumé, GitHub, and LinkedIn are one click away.
-            </p>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <button
-              className="inline-flex min-h-14 items-center justify-center gap-2 rounded-glass bg-aero-deep px-4 py-3 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-aero-ink focus-visible:outline-aero-lime motion-reduce:hover:translate-y-0"
-              type="button"
-              onClick={copyEmail}
-            >
-              {copied ? <Check aria-hidden="true" size={17} /> : <Copy aria-hidden="true" size={17} />}
-              {copied ? "Copied" : "Copy email"}
-            </button>
-            <Link
-              className="inline-flex min-h-14 items-center justify-center gap-2 rounded-glass border border-white/80 bg-white/58 px-4 py-3 text-sm font-black text-aero-deep transition hover:-translate-y-0.5 hover:bg-white/75 focus-visible:outline-aero-lime motion-reduce:hover:translate-y-0"
-              href={identity.resumePdf}
-              target="_blank"
-            >
-              <FileText aria-hidden="true" size={17} />
-              Résumé
-            </Link>
-            <Link
-              className="inline-flex min-h-14 items-center justify-center gap-2 rounded-glass border border-white/80 bg-white/58 px-4 py-3 text-sm font-black text-aero-deep transition hover:-translate-y-0.5 hover:bg-white/75 focus-visible:outline-aero-lime motion-reduce:hover:translate-y-0"
-              href={identity.github}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <Github aria-hidden="true" size={17} />
-              GitHub
-            </Link>
-            <Link
-              className="inline-flex min-h-14 items-center justify-center gap-2 rounded-glass border border-white/80 bg-white/58 px-4 py-3 text-sm font-black text-aero-deep transition hover:-translate-y-0.5 hover:bg-white/75 focus-visible:outline-aero-lime motion-reduce:hover:translate-y-0"
-              href={identity.linkedin}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <Linkedin aria-hidden="true" size={17} />
-              LinkedIn
-            </Link>
-          </div>
-
-          <a
-            className="inline-flex w-fit items-center gap-2 rounded-full px-1 text-sm font-bold text-aero-deep underline decoration-aero-blue/45 decoration-2 underline-offset-4 transition hover:text-aero-ink focus-visible:outline-aero-lime"
-            href={`mailto:${identity.email}`}
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-4 font-mono text-[0.72rem] uppercase tracking-[0.09em] text-text-muted">
+          <button
+            type="button"
+            onClick={copyEmail}
+            className="link-wipe transition-colors duration-200 ease-out-expo hover:text-text focus-visible:text-text motion-reduce:transition-none"
+            aria-label={copied ? "Email copied" : `Copy ${identity.email}`}
           >
-            <Mail aria-hidden="true" size={16} />
-            {identity.email}
-          </a>
-        </WindowFrame>
+            {copied ? "copied" : identity.email}
+          </button>
+
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              className="link-wipe transition-colors duration-200 ease-out-expo hover:text-text focus-visible:text-text motion-reduce:transition-none"
+              href={link.href}
+              rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+              target={link.href.startsWith("http") || link.href.endsWith(".pdf") ? "_blank" : undefined}
+            >
+              {link.label}
+              {link.href.startsWith("http") || link.href.endsWith(".pdf") ? " ↗" : null}
+            </Link>
+          ))}
+        </div>
       </div>
-    </section>
+    </SectionShell>
   );
 }

@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 
-import { AtmosphereBackground } from "@/components/layout/AtmosphereBackground";
-import { CommandPalette } from "@/components/layout/CommandPalette";
 import { Footer } from "@/components/layout/Footer";
 import { Nav } from "@/components/layout/Nav";
-import { Y2KProvider } from "@/components/providers/Y2KProvider";
+import { LenisProvider } from "@/components/providers/LenisProvider";
 import { identity } from "@/lib/site-data";
 
 import "./globals.css";
@@ -44,21 +42,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Y2KProvider>
+        <LenisProvider>
           <a
-            className="sr-only z-[100] rounded-full bg-aero-deep px-4 py-3 font-bold text-white focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:outline-aero-lime"
+            className="sr-only z-[100] bg-accent px-4 py-3 font-medium text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
             href="#main-content"
           >
             Skip to content
           </a>
-          <AtmosphereBackground />
           <Nav />
           <main id="main-content" className="relative z-10">
             {children}
           </main>
           <Footer />
-          <CommandPalette />
-        </Y2KProvider>
+        </LenisProvider>
       </body>
     </html>
   );
