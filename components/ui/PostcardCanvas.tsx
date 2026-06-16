@@ -1,14 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { RotateCcw } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 const CANVAS_WIDTH = 320;
 const CANVAS_HEIGHT = 200;
 const MAX_DATA_URL_LENGTH = 200_000;
-const PEN_COLORS = ["#0050a0", "#38abe4", "#9fe11d"] as const;
+const CANVAS_FILL = "#141417";
+const PEN_COLORS = [
+  { label: "off-white", value: "#ECECEE" },
+  { label: "ember", value: "#FF5D3B" },
+  { label: "muted gray", value: "#8A8A93" },
+  { label: "faint gray", value: "#55555C" },
+] as const;
 
 type PostcardCanvasProps = {
   readonly onDrawingChange?: (drawing: string | null) => void;
@@ -33,7 +38,7 @@ function primeCanvas(canvas: HTMLCanvasElement) {
   const context = canvas.getContext("2d");
   if (!context) return;
 
-  context.fillStyle = "#f8fdff";
+  context.fillStyle = CANVAS_FILL;
   context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   context.lineCap = "round";
   context.lineJoin = "round";
@@ -53,7 +58,7 @@ function exportCompactPng(canvas: HTMLCanvasElement) {
     const reducedContext = reduced.getContext("2d");
     if (!reducedContext) break;
 
-    reducedContext.fillStyle = "#f8fdff";
+    reducedContext.fillStyle = CANVAS_FILL;
     reducedContext.fillRect(0, 0, reduced.width, reduced.height);
     reducedContext.drawImage(source, 0, 0, reduced.width, reduced.height);
     source = reduced;
@@ -65,7 +70,7 @@ function exportCompactPng(canvas: HTMLCanvasElement) {
 
 export function PostcardCanvas({ onDrawingChange, className, disabled = false }: PostcardCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [penColor, setPenColor] = useState<(typeof PEN_COLORS)[number]>(PEN_COLORS[0]);
+  const [penColor, setPenColor] = useState<(typeof PEN_COLORS)[number]["value"]>(PEN_COLORS[0].value);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasInk, setHasInk] = useState(false);
 
@@ -148,17 +153,17 @@ export function PostcardCanvas({ onDrawingChange, className, disabled = false }:
           <legend className="sr-only">Postcard pen color</legend>
           {PEN_COLORS.map((color) => (
             <button
-              key={color}
+              key={color.value}
               type="button"
-              aria-label={`Use ${color} pen`}
-              aria-pressed={penColor === color}
+              aria-label={`Use ${color.label} pen`}
+              aria-pressed={penColor === color.value}
               disabled={disabled}
-              onClick={() => setPenColor(color)}
+              onClick={() => setPenColor(color.value)}
               className={cn(
-                "h-8 w-8 rounded-full border border-white/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] transition disabled:cursor-not-allowed disabled:opacity-50",
-                penColor === color && "ring-2 ring-aero-deep ring-offset-2 ring-offset-white/70",
+                "h-6 w-6 border border-line transition duration-200 ease-out-expo disabled:cursor-not-allowed disabled:opacity-45 motion-reduce:transition-none",
+                penColor === color.value && "border-accent ring-1 ring-accent ring-offset-2 ring-offset-bg",
               )}
-              style={{ backgroundColor: color }}
+              style={{ backgroundColor: color.value }}
             />
           ))}
         </fieldset>
@@ -166,10 +171,9 @@ export function PostcardCanvas({ onDrawingChange, className, disabled = false }:
           type="button"
           onClick={clearCanvas}
           disabled={disabled || !hasInk}
-          className="inline-flex items-center gap-2 rounded-md border border-white/75 bg-white/58 px-3 py-2 font-mono text-xs font-black uppercase tracking-[0.12em] text-aero-deep shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] transition hover:bg-white/75 disabled:cursor-not-allowed disabled:opacity-50"
+          className="link-wipe font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-faint transition-colors duration-200 ease-out-expo hover:text-text focus-visible:text-text disabled:cursor-not-allowed disabled:text-text-faint disabled:opacity-45 motion-reduce:transition-none"
         >
-          <RotateCcw aria-hidden="true" className="h-3.5 w-3.5" />
-          Clear
+          clear
         </button>
       </div>
 
@@ -180,8 +184,8 @@ export function PostcardCanvas({ onDrawingChange, className, disabled = false }:
         aria-label="Draw a postcard doodle"
         role="img"
         className={cn(
-          "aspect-[8/5] w-full max-w-[320px] touch-none rounded-lg border border-white/80 bg-white shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_14px_30px_rgba(0,80,160,0.12)]",
-          disabled ? "cursor-not-allowed opacity-60" : "cursor-crosshair",
+          "aspect-[8/5] w-full max-w-[320px] touch-none border border-line bg-surface",
+          disabled ? "cursor-not-allowed opacity-50" : "cursor-crosshair",
         )}
         onPointerDown={startDrawing}
         onPointerMove={continueDrawing}
@@ -189,8 +193,8 @@ export function PostcardCanvas({ onDrawingChange, className, disabled = false }:
         onPointerCancel={stopDrawing}
         onPointerLeave={stopDrawing}
       />
-      <p className="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-aero-ink/55">
-        Tiny PNG doodle, capped at 200KB
+      <p className="font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-faint">
+        png doodle · 200kb max
       </p>
     </div>
   );

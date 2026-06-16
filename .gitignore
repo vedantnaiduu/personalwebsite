@@ -39,3 +39,12 @@ next-env.d.ts
 research/.venv/
 research/scrape_output.json
 research/__pycache__/
+
+# playwright + design screenshots
+.playwright-mcp/
+*-hero.png
+*-full.png
+ref-*.png
+current-*.png
+v2-*.png
+.playwright-mcp/
