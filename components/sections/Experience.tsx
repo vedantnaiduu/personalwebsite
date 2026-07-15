@@ -1,5 +1,11 @@
+import { AsciiShape } from "@/components/ascii/AsciiShape";
 import { SectionShell } from "@/components/sections/SectionShell";
+import type { ShapeName } from "@/lib/ascii/shapes";
 import { experience } from "@/lib/site-data";
+
+// a relevant animation per role: retrieval graph for the RAG work, a DNA helix
+// for the computational-biology research
+const roleShapes: ShapeName[] = ["network", "helix"];
 
 const metricPattern = /(\b\d[\d,]*(?:\.\d+)?%?\+?\b)/g;
 
@@ -8,9 +14,9 @@ function MetricNumbers({ text }: { readonly text: string }) {
     <>
       {text.split(metricPattern).map((part, index) =>
         index % 2 === 1 ? (
-          <strong key={`${part}-${index}`} className="font-semibold text-text">
+          <span key={`${part}-${index}`} className="font-medium text-ink">
             {part}
-          </strong>
+          </span>
         ) : (
           part
         ),
@@ -21,36 +27,52 @@ function MetricNumbers({ text }: { readonly text: string }) {
 
 export function Experience() {
   return (
-    <SectionShell id="experience" eyebrow="› experience" title="Experience">
-      <div className="border-b border-line">
-        {experience.map((role) => (
+    <SectionShell id="experience" eyebrow="experience" title="Experience">
+      <div>
+        {experience.map((role, index) => (
           <article
             key={`${role.role}-${role.organization}`}
-            className="grid gap-5 border-t border-line py-8 md:grid-cols-[11rem_minmax(0,1fr)] md:gap-10 md:py-10"
+            className={`grid gap-8 md:grid-cols-[minmax(0,1fr)_150px] md:items-start ${
+              index === 0 ? "pb-14" : "border-t border-line pt-14"
+            }`}
           >
-            <div className="font-mono text-[0.7rem] uppercase tracking-[0.09em] text-text-faint">
-              <p>{role.dates}</p>
-              <p className="mt-3 max-w-[13rem] text-text-muted">{role.organization}</p>
-              <p className="mt-2">{role.location}</p>
-            </div>
-
             <div>
-              <h3 className="text-[clamp(1.45rem,2.6vw,2.35rem)] font-medium leading-[1.05] tracking-[-0.03em] text-text">
+              <div className="font-mono text-[0.7rem] uppercase tracking-[0.09em] text-text-faint">
+                <span>{role.dates}</span>
+                <span className="mx-2" aria-hidden="true">
+                  /
+                </span>
+                <span className="text-text-muted">{role.organization}</span>
+                <span className="mx-2" aria-hidden="true">
+                  /
+                </span>
+                <span>{role.location}</span>
+              </div>
+
+              <h3 className="mt-3 font-sans text-[1.1rem] font-medium leading-[1.2] tracking-[-0.01em] text-ink sm:text-[1.25rem]">
                 {role.role}
               </h3>
-              <ul className="mt-6 grid gap-4">
+
+              <ul className="mt-5 grid max-w-[60ch] gap-3">
                 {role.bullets.map((bullet) => (
-                  <li
-                    key={bullet}
-                    className="grid grid-cols-[0.55rem_minmax(0,1fr)] gap-4 text-base leading-7 text-text-muted sm:text-lg sm:leading-8"
-                  >
-                    <span className="mt-[0.78em] h-px bg-line" aria-hidden="true" />
-                    <span>
-                      <MetricNumbers text={bullet} />
-                    </span>
+                  <li key={bullet} className="text-[0.95rem] leading-[1.65] text-text-muted sm:text-base">
+                    <MetricNumbers text={bullet} />
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* relevant ascii animation */}
+            <div
+              aria-hidden="true"
+              className="hidden aspect-square w-full self-start md:block"
+            >
+              <AsciiShape
+                shape={roleShapes[index] ?? "sphere"}
+                className="text-ink"
+                fontSize={9}
+                speed={0.8}
+              />
             </div>
           </article>
         ))}

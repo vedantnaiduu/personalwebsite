@@ -61,7 +61,8 @@ export const identity = {
   spotify: "https://open.spotify.com/user/vedantnaidu",
   locationVibe: "UMass Amherst / Boston / Bay Area",
   resumePdf: "/Vedant_Naidu_Resume.pdf",
-  positioning: "AI engineer building agentic & RAG systems that ship to real users.",
+  positioning:
+    "CS and biology student at UMass Amherst, building AI for healthcare that makes it past the demo.",
 } as const satisfies Identity;
 
 export const socialLinks = [
@@ -217,16 +218,17 @@ export const skillGroups = [
 
 export const about = {
   voice: [
-    "I like building things that make it past the demo table and into real workflows.",
-    "Right now I am optimizing for agentic systems, RAG, and AI that helps people move faster at work without making them babysit the software.",
-    "Off the laptop, I am usually playing pickleball, chasing a gym PR, feeding the Spotify widget with the next house set, or watching Suits.",
+    "Hi, I'm Vedant. I'm a CS student at UMass Amherst, minoring in biology.",
+    "I care most about where healthcare and AI actually meet, because that's where the interesting problems and the real stakes both live. I like building things that make it past the demo and into someone's real workflow.",
+    "Right now that means a RAG system used across 351 Massachusetts health departments. Before that, computational biology research at a Stanford lab.",
+    "Off the clock I'm on a pickleball court, chasing a gym PR, somewhere in a house set, or rewatching Suits.",
   ],
   personalityFacts: [
-    "Loves building things that ship to real users.",
-    "Optimizing next for agentic systems and AI that augments how people work.",
-    "Plays pickleball regularly.",
-    "Gym/PRs.",
-    "House music, festivals, and live shows.",
-    "Loves TV shows and is currently watching Suits.",
+    "CS + biology, UMass Amherst '27",
+    "Into the healthcare and AI intersection",
+    "Builds things meant to outlive the demo",
+    "Pickleball and gym PRs",
+    "House music, festivals, live sets",
+    "Currently rewatching Suits",
   ],
 } as const satisfies AboutContent;

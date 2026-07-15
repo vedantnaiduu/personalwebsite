@@ -20,6 +20,7 @@ const config: Config = {
     extend: {
       colors: {
         bg: "var(--bg)",
+        ink: "var(--ink)",
         surface: {
           DEFAULT: "var(--surface)",
           2: "var(--surface-2)",
@@ -49,17 +50,17 @@ const config: Config = {
         11: "var(--space-11)",
       },
       maxWidth: {
-        page: "1240px",
-        copy: "66ch",
+        page: "1320px",
+        copy: "62ch",
       },
       borderRadius: {
         DEFAULT: "0",
-        visual: "10px",
+        visual: "8px",
       },
       fontFamily: {
+        display: ["var(--font-display)"],
         sans: ["var(--font-sans)"],
         mono: ["var(--font-mono)"],
-        accent: ["var(--font-accent)"],
       },
       transitionTimingFunction: {
         "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",

@@ -1,25 +1,30 @@
-@import url("https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400..600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --font-sans: "General Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-accent: "Fraunces", Georgia, serif;
-  --font-mono: "Geist Mono", "SFMono-Regular", Consolas, monospace;
+/*
+  Design language: sleek editorial minimalism (ethanchng.com reference) crossed
+  with ASCII/glyph features. White page, near-black ink, a refined serif for
+  display + a monospace for metadata and the ASCII canvases. The ASCII is drawn
+  in the ink color so it pops on white. Fonts injected via next/font in layout.
+*/
 
-  --bg: #0a0a0b;
-  --surface: #141417;
-  --surface-2: #1b1b1f;
-  --text: #ececee;
-  --muted: #8a8a93;
-  --faint: #55555c;
-  --line: rgba(255, 255, 255, 0.08);
-  --accent: #ff5d3b;
-  --accent-weak: rgba(255, 93, 59, 0.14);
+:root {
+  /* Geist family: Pixel Square for display, Sans for body, Mono for metadata + ASCII */
+  --font-display: var(--font-geist-pixel-square), var(--font-geist-mono), monospace;
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --bg: #ffffff;          /* white page */
+  --surface: #f6f5f2;     /* faint panel */
+  --surface-2: #eeece7;
+  --ink: #14120f;         /* primary ink (warm near-black) */
+  --text: #14120f;        /* alias so existing text-text utilities still work */
+  --muted: #6d6a63;       /* secondary */
+  --faint: #a6a29a;       /* tertiary / labels */
+  --line: rgba(20, 18, 15, 0.12);  /* hairline */
+  --accent: #d6431f;      /* restrained ember, used rarely */
+  --accent-weak: rgba(214, 67, 31, 0.1);
 
   --space-1: 4px;
   --space-2: 8px;
@@ -33,9 +38,15 @@
   --space-10: 128px;
   --space-11: 160px;
 
-  --container: 1240px;
+  --container: 760px;     /* narrow editorial column (ethanchng-style) */
+  --container-wide: 1080px;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* ascii <pre> grid metrics (JetBrains Mono advance ≈ 0.6em) */
+  --ascii-cell: 7.2px;
+  --ascii-line: 13.5px;
+  --ascii-size: 12px;
 }
 
 * {
@@ -46,8 +57,7 @@
 
 html {
   min-height: 100%;
-  scroll-behavior: smooth;
-  color-scheme: dark;
+  color-scheme: light;
   background: var(--bg);
 }
 
@@ -55,36 +65,23 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background: var(--bg);
-  color: var(--text);
+  color: var(--ink);
   font-family: var(--font-sans);
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-optical-sizing: auto;
-  text-rendering: geometricPrecision;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-  mix-blend-mode: soft-light;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--accent);
-  color: #0a0a0b;
+  background: var(--ink);
+  color: var(--bg);
 }
 
 :focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 4px;
+  outline-offset: 3px;
 }
 
 a {
@@ -101,18 +98,17 @@ select {
 
 button {
   color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 @layer base {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: var(--text);
-    font-family: var(--font-sans);
-    letter-spacing: -0.02em;
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0;
     text-wrap: balance;
   }
 
@@ -120,57 +116,97 @@ button {
     text-wrap: pretty;
   }
 
-  code,
-  kbd,
-  pre,
-  samp {
+  code, kbd, pre, samp {
     font-family: var(--font-mono);
   }
 }
 
 @layer utilities {
   .container-page {
-    width: min(calc(100% - 32px), var(--container));
+    width: min(calc(100% - 40px), var(--container));
+    margin-inline: auto;
+  }
+  .container-wide {
+    width: min(calc(100% - 40px), var(--container-wide));
     margin-inline: auto;
   }
 
+  /* mono metadata label */
+  .label-mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  /* underline-wipe link */
   .link-wipe {
     position: relative;
     display: inline-block;
   }
-
   .link-wipe::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -0.18em;
+    bottom: -0.12em;
     width: 100%;
     height: 1px;
     background: currentColor;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 220ms var(--ease-out-expo);
+    transition: transform 260ms var(--ease-out-expo);
   }
-
   .link-wipe:hover::after,
   .link-wipe:focus-visible::after {
     transform: scaleX(1);
+  }
+
+  /* contact form fields */
+  .input-line {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 0;
+    padding: 10px 12px;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    transition: border-color 200ms var(--ease-out-expo), box-shadow 200ms var(--ease-out-expo);
+  }
+  .input-line::placeholder {
+    color: var(--faint);
+  }
+  .input-line:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px var(--accent-weak);
+  }
+
+  /* the shared ascii <pre> render surface */
+  .ascii {
+    font-family: var(--font-mono);
+    font-size: var(--ascii-size);
+    line-height: var(--ascii-line);
+    letter-spacing: 0;
+    white-space: pre;
+    user-select: none;
+    -webkit-user-select: none;
+    text-rendering: optimizeSpeed;
   }
 }
 
 @media (min-width: 640px) {
   @layer utilities {
     .container-page {
-      width: min(calc(100% - 48px), var(--container));
+      width: min(calc(100% - 64px), var(--container));
     }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {
