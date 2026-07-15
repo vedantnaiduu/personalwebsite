@@ -10,14 +10,12 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 pb-20 sm:px-6 lg:px-8">
-        <Projects />
-        <Experience />
-        <About />
-        <Skills />
-        <PostcardWall />
-        <Contact />
-      </div>
+      <Projects />
+      <Experience />
+      <About />
+      <Skills />
+      <PostcardWall />
+      <Contact />
     </>
   );
 }

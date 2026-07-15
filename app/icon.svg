@@ -1,14 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="chrome" x1="0" x2="0" y1="0" y2="1">
-      <stop offset="0" stop-color="#0a3a66" />
-      <stop offset="0.22" stop-color="#2f7fb8" />
-      <stop offset="0.48" stop-color="#ffffff" />
-      <stop offset="0.68" stop-color="#69cfff" />
-      <stop offset="1" stop-color="#0050a0" />
-    </linearGradient>
-  </defs>
-  <rect width="64" height="64" rx="14" fill="#e8fbff" />
-  <rect x="6" y="6" width="52" height="52" rx="11" fill="url(#chrome)" />
-  <path d="M18 20h8l6 22 6-22h8L36 46h-8L18 20z" fill="#ffffff" opacity=".96" />
+  <rect width="64" height="64" fill="#0A0A0B" />
+  <rect x="8" y="8" width="48" height="48" fill="#141417" />
+  <path d="M18 20h7.5L32 41l6.5-21H46L36.5 46h-9L18 20z" fill="#ECECEE" />
+  <path d="M39 20h7l-9.5 26h-5L39 20z" fill="#FF5D3B" />
 </svg>

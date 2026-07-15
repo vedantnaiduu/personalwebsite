@@ -1,97 +1,65 @@
-import { ExternalLink, Github } from "lucide-react";
-
-import { AwardBadge } from "@/components/ui/AwardBadge";
-import { Chip } from "@/components/ui/Chip";
-import { MetricText } from "@/components/ui/MetricText";
-import { WindowFrame } from "@/components/ui/WindowFrame";
+import { SectionShell } from "@/components/sections/SectionShell";
 import { projects } from "@/lib/site-data";
 
-function toWindowTitle(title: string) {
-  return title.toLowerCase().replaceAll(" ", "_");
+const metricPattern = /(\b\d[\d,]*(?:\.\d+)?%?\+?\b)/g;
+
+function MetricNumbers({ text }: { readonly text: string }) {
+  return (
+    <>
+      {text.split(metricPattern).map((part, index) =>
+        index % 2 === 1 ? (
+          <strong key={`${part}-${index}`} className="font-semibold text-text">
+            {part}
+          </strong>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
 }
 
 export function Projects() {
   return (
-    <section id="projects" className="scroll-mt-28 py-8" aria-labelledby="projects-title">
-      <div className="grid gap-6 md:grid-cols-[14rem_minmax(0,1fr)] md:items-start">
-        <div>
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-aero-deep/72">
-            01 / selected work
-          </p>
-          <h2 id="projects-title" className="mt-3 text-3xl font-black tracking-normal text-aero-ink sm:text-4xl">
-            Selected Projects
-          </h2>
-        </div>
-
-        <div className="grid gap-5 lg:grid-cols-2">
-          {projects.map((project) => (
-            <WindowFrame
-              key={project.id}
-              title={toWindowTitle(project.title)}
-              className="flex min-h-full flex-col"
-              bodyClassName="flex flex-1 flex-col gap-5"
-            >
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <h3 className="max-w-md text-xl font-black leading-tight text-aero-ink">{project.title}</h3>
-                {project.award ? <AwardBadge>{project.award}</AwardBadge> : null}
-              </div>
-
-              <p className="text-sm font-semibold leading-7 text-aero-ink/82">
-                <span className="font-mono text-[0.68rem] font-black uppercase tracking-[0.14em] text-aero-deep">
-                  Outcome:{" "}
+    <SectionShell id="work" eyebrow="› selected work" title="Selected Work">
+      <div className="group/list border-b border-line">
+        {projects.map((project) => (
+          <a
+            key={project.id}
+            className="group/work relative grid gap-5 border-t border-line py-8 text-text-muted transition-[opacity,color] duration-200 ease-out-expo hover:!opacity-100 hover:text-text focus-visible:!opacity-100 focus-visible:text-text md:grid-cols-[minmax(0,0.9fr)_minmax(18rem,0.58fr)] md:gap-10 md:py-10 group-hover/list:opacity-45"
+            href={project.githubUrl}
+            rel="noreferrer"
+            target="_blank"
+            aria-label={`${project.title} on GitHub`}
+          >
+            <span
+              className="absolute bottom-[-1px] left-0 h-px w-full origin-left scale-x-0 bg-accent transition-transform duration-300 ease-out-expo group-hover/work:scale-x-100 group-focus-visible/work:scale-x-100 motion-reduce:transition-none"
+              aria-hidden="true"
+            />
+            <span className="min-w-0">
+              <span className="flex items-start gap-4">
+                <span className="text-[clamp(1.75rem,3vw,2.55rem)] font-medium leading-[1.04] tracking-[-0.035em] text-text transition-colors duration-200 ease-out-expo group-hover/work:text-text group-focus-visible/work:text-text">
+                  {project.title}
                 </span>
-                <MetricText text={project.outcome} />
-              </p>
-
-              {project.underTheHood ? (
-                <details className="group rounded-lg border border-white/70 bg-white/38 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)]">
-                  <summary className="flex cursor-pointer list-none items-center gap-2 font-mono text-[0.72rem] font-black uppercase tracking-[0.12em] text-aero-deep focus-visible:outline-aero-lime [&::-webkit-details-marker]:hidden">
-                    <span
-                      className="inline-block transition-transform duration-150 group-open:rotate-90 motion-reduce:transition-none"
-                      aria-hidden="true"
-                    >
-                      ▸
-                    </span>
-                    under the hood
-                  </summary>
-                  <p className="mt-3 text-sm leading-7 text-aero-ink/78">
-                    <MetricText text={project.underTheHood} />
-                  </p>
-                </details>
-              ) : null}
-
-              <div className="mt-auto flex flex-wrap gap-2">
-                {project.stack.map((item) => (
-                  <Chip key={item}>{item}</Chip>
-                ))}
-              </div>
-
-              <div className="flex flex-wrap gap-3 pt-1">
-                <a
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-aero-deep px-4 py-2.5 text-sm font-black text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-aero-ink focus-visible:outline-aero-lime motion-reduce:hover:translate-y-0"
-                  href={project.githubUrl}
-                  rel="noreferrer"
-                  target="_blank"
+                <span
+                  className="mt-2 inline-block translate-x-[-0.5rem] text-xl leading-none text-accent opacity-0 transition duration-200 ease-out-expo group-hover/work:translate-x-0 group-hover/work:opacity-100 group-focus-visible/work:translate-x-0 group-focus-visible/work:opacity-100 motion-reduce:transition-none"
+                  aria-hidden="true"
                 >
-                  <Github aria-hidden="true" size={16} />
-                  GitHub
-                </a>
-                {"demoUrl" in project && typeof project.demoUrl === "string" ? (
-                  <a
-                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white/80 bg-white/56 px-4 py-2.5 text-sm font-black text-aero-deep transition hover:-translate-y-0.5 hover:bg-white/75 focus-visible:outline-aero-lime motion-reduce:hover:translate-y-0"
-                    href={project.demoUrl}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <ExternalLink aria-hidden="true" size={16} />
-                    Demo
-                  </a>
-                ) : null}
-              </div>
-            </WindowFrame>
-          ))}
-        </div>
+                  ↗
+                </span>
+              </span>
+              <span className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-faint">
+                <span>{project.stack.join(" · ")}</span>
+                {project.award ? <span className="text-accent">{project.award}</span> : null}
+              </span>
+            </span>
+
+            <span className="max-w-[46rem] self-center text-base leading-7 text-text-muted transition-colors duration-200 ease-out-expo group-hover/work:text-text group-focus-visible/work:text-text sm:text-lg sm:leading-8">
+              <MetricNumbers text={project.outcome} />
+            </span>
+          </a>
+        ))}
       </div>
-    </section>
+    </SectionShell>
   );
 }

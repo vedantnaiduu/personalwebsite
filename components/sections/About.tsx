@@ -1,27 +1,22 @@
+import { SectionShell } from "@/components/sections/SectionShell";
 import { about } from "@/lib/site-data";
-import { WindowFrame } from "@/components/ui/WindowFrame";
 
 export function About() {
-  return (
-    <section id="about" className="scroll-mt-28 py-8" aria-labelledby="about-title">
-      <div className="grid gap-6 md:grid-cols-[14rem_minmax(0,1fr)] md:items-start">
-        <div>
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-aero-deep/72">
-            03 / readme
-          </p>
-          <h2 id="about-title" className="mt-3 text-3xl font-black tracking-normal text-aero-ink sm:text-4xl">
-            About
-          </h2>
-        </div>
+  const opening = about.voice[0].replace("I like building", "I build");
 
-        <WindowFrame title="about_me.txt" bodyClassName="space-y-4">
-          {about.voice.map((line) => (
-            <p key={line} className="max-w-3xl text-base font-semibold leading-8 text-aero-ink/80 sm:text-lg">
-              {line}
-            </p>
-          ))}
-        </WindowFrame>
+  return (
+    <SectionShell id="about" eyebrow="› about" title="About">
+      <div className="max-w-[60ch] text-[clamp(1.35rem,2.4vw,2rem)] leading-[1.45] tracking-[-0.02em] text-text-muted">
+        <p>
+          {opening} Right now I am deep in{" "}
+          <span className="font-accent italic text-accent">agentic</span> systems, RAG, and AI
+          that helps people move faster at work without making them babysit the software.
+        </p>
+        <p className="mt-7">
+          Off the laptop, I am usually playing pickleball, finding the next house set or festival,
+          and keeping Suits in the rotation.
+        </p>
       </div>
-    </section>
+    </SectionShell>
   );
 }

@@ -1,4 +1,7 @@
-import { WindowFrame } from "@/components/ui/WindowFrame";
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+
 import { cn } from "@/lib/utils";
 
 export type GuestbookEntry = {
@@ -13,6 +16,15 @@ type PostcardProps = {
   readonly entry: GuestbookEntry;
   readonly className?: string;
 };
+
+const INLINE_IMAGE_DATA_URL = /^data:image\/(png|jpeg|webp|svg\+xml)(?:;[^,]*)?,/i;
+
+function formatAbsoluteDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "recent";
+
+  return new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(date);
+}
 
 function formatRelativeDate(value: string) {
   const then = new Date(value).getTime();
@@ -33,38 +45,55 @@ function formatRelativeDate(value: string) {
   return new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(new Date(value));
 }
 
+function useClientDateLabel(value: string) {
+  const absolute = useMemo(() => formatAbsoluteDate(value), [value]);
+  const [label, setLabel] = useState(absolute);
+
+  useEffect(() => {
+    function updateLabel() {
+      setLabel(formatRelativeDate(value));
+    }
+
+    updateLabel();
+    const timer = window.setInterval(updateLabel, 60_000);
+    return () => window.clearInterval(timer);
+  }, [value]);
+
+  return label;
+}
+
 export function Postcard({ entry, className }: PostcardProps) {
+  const dateLabel = useClientDateLabel(entry.created_at);
+  const absoluteDate = formatAbsoluteDate(entry.created_at);
+
   return (
-    <WindowFrame title="postcard.png" className={cn("h-full", className)} bodyClassName="p-3">
-      <div className="grid h-full gap-3">
-        <div className="relative aspect-[8/5] overflow-hidden rounded-lg border border-white/80 bg-[#f8fdff] shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
-          {entry.drawing && /^data:image\/(png|jpeg|webp);base64,/i.test(entry.drawing) ? (
+    <article className={cn("grid h-full gap-3 border border-line bg-surface p-3", className)}>
+      <div className="relative aspect-[8/5] overflow-hidden border border-line bg-bg">
+        {entry.drawing && INLINE_IMAGE_DATA_URL.test(entry.drawing) ? (
             // Only render inline image data URLs — never an attacker-controlled external URL.
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={entry.drawing} alt={`Doodle by ${entry.name}`} className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full items-center justify-center diagonal-hatching text-aero-deep/55">
-              <span className="rounded-full border border-white/80 bg-white/70 px-3 py-1 font-mono text-[0.66rem] font-black uppercase tracking-[0.14em]">
-                blank card
-              </span>
-            </div>
-          )}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/55 to-transparent" />
-        </div>
-
-        <div className="grid gap-2">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="min-w-0 truncate text-base font-black tracking-normal text-aero-ink">{entry.name}</h3>
-            <time
-              dateTime={entry.created_at}
-              className="shrink-0 pt-1 font-mono text-[0.64rem] font-bold uppercase tracking-[0.12em] text-aero-deep/65"
-            >
-              {formatRelativeDate(entry.created_at)}
-            </time>
+          <img src={entry.drawing} alt={`Doodle by ${entry.name}`} className="h-full w-full object-cover" />
+        ) : (
+          <div className="flex h-full items-center justify-center bg-surface-2 text-text-faint">
+            <span className="font-mono text-[0.64rem] uppercase tracking-[0.09em]">blank mark</span>
           </div>
-          <p className="text-sm font-semibold leading-6 text-aero-ink/76">{entry.message}</p>
-        </div>
+        )}
       </div>
-    </WindowFrame>
+
+      <div className="grid gap-2">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="min-w-0 truncate text-sm font-medium tracking-[-0.01em] text-text">{entry.name}</h3>
+          <time
+            dateTime={entry.created_at}
+            title={absoluteDate}
+            className="shrink-0 pt-0.5 font-mono text-[0.62rem] uppercase tracking-[0.09em] text-text-faint"
+            suppressHydrationWarning
+          >
+            {dateLabel}
+          </time>
+        </div>
+        <p className="line-clamp-3 text-sm leading-6 text-text-muted">{entry.message}</p>
+      </div>
+    </article>
   );
 }

@@ -7,101 +7,68 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "1rem",
+        sm: "1.5rem",
+      },
+      screens: {
+        "2xl": "1240px",
+      },
+    },
     extend: {
       colors: {
-        aero: {
-          sky: "var(--aero-sky)",
-          blue: "var(--aero-blue)",
-          deep: "var(--aero-deep)",
-          ink: "var(--aero-ink)",
-          green: "var(--aero-green)",
-          lime: "var(--aero-lime)",
-        },
-        glass: {
-          white: "var(--glass-white)",
-          border: "var(--glass-border)",
-        },
-        y2k: {
-          magenta: "var(--y2k-magenta)",
-          acid: "var(--y2k-acid)",
-        },
-        background: {
-          DEFAULT: "hsl(var(--background))",
-          dark: "var(--aero-ink)",
-          deep: "var(--aero-deep)",
-        },
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        border: "hsl(var(--border))",
-        ring: "hsl(var(--ring))",
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-          blue: "var(--aero-blue)",
-          "blue-intense": "var(--aero-deep)",
+        bg: "var(--bg)",
+        surface: {
+          DEFAULT: "var(--surface)",
+          2: "var(--surface-2)",
         },
         text: {
-          primary: "var(--aero-ink)",
-          secondary: "rgba(6, 42, 74, 0.72)",
+          DEFAULT: "var(--text)",
+          muted: "var(--muted)",
+          faint: "var(--faint)",
         },
+        line: "var(--line)",
+        accent: {
+          DEFAULT: "var(--accent)",
+          weak: "var(--accent-weak)",
+        },
+      },
+      spacing: {
+        1: "var(--space-1)",
+        2: "var(--space-2)",
+        3: "var(--space-3)",
+        4: "var(--space-4)",
+        5: "var(--space-5)",
+        6: "var(--space-6)",
+        7: "var(--space-7)",
+        8: "var(--space-8)",
+        9: "var(--space-9)",
+        10: "var(--space-10)",
+        11: "var(--space-11)",
+      },
+      maxWidth: {
+        page: "1240px",
+        copy: "66ch",
       },
       borderRadius: {
-        glass: "10px",
+        DEFAULT: "0",
+        visual: "10px",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
-        mono: ["var(--font-mono)", "'JetBrains Mono'", "monospace"],
+        sans: ["var(--font-sans)"],
+        mono: ["var(--font-mono)"],
+        accent: ["var(--font-accent)"],
       },
-      animation: {
-        "fade-in": "fadeIn 0.6s ease-in-out",
-        "slide-up": "slideUp 0.6s ease-out",
-        "aero-float": "aeroFloat 14s ease-in-out infinite",
-        "chrome-shine": "chromeShine 5s ease-in-out infinite",
-      },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        slideUp: {
-          "0%": { transform: "translateY(20px)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" },
-        },
-        aeroFloat: {
-          "0%, 100%": {
-            transform: "translate3d(0, 0, 0) scale(1)",
-          },
-          "50%": {
-            transform: "translate3d(0, -12px, 0) scale(1.02)",
-          },
-        },
-        chromeShine: {
-          "0%, 100%": {
-            backgroundPosition: "0% 50%",
-          },
-          "50%": {
-            backgroundPosition: "100% 50%",
-          },
-        },
-      },
-      boxShadow: {
-        glass:
-          "0 24px 70px rgba(0, 80, 160, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.7), inset 0 -18px 36px rgba(105, 207, 255, 0.12)",
-        glow: "0 0 32px rgba(105, 207, 255, 0.32)",
+      transitionTimingFunction: {
+        "out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "out-quart": "cubic-bezier(0.25, 1, 0.5, 1)",
+        "in-out-quint": "cubic-bezier(0.83, 0, 0.17, 1)",
       },
     },
   },
   plugins: [],
 };
+
 export default config;

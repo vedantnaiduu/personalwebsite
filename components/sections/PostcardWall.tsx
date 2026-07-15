@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { SendHorizontal } from "lucide-react";
 
-import { PostcardCanvas } from "@/components/ui/PostcardCanvas";
+import { SectionShell } from "@/components/sections/SectionShell";
 import { Postcard, type GuestbookEntry } from "@/components/ui/Postcard";
-import { WindowFrame } from "@/components/ui/WindowFrame";
+import { PostcardCanvas } from "@/components/ui/PostcardCanvas";
 import { getSupabase } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -13,36 +12,49 @@ const LOCAL_COOLDOWN_MS = 20_000;
 const COOLDOWN_KEY = "guestbook:last-posted-at";
 
 const sampleDoodles = [
-  "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20320%20200'%3E%3Crect%20width='320'%20height='200'%20fill='%23f8fdff'/%3E%3Cpath%20d='M42%20118c38-66%2080%2063%20119-3%2034-58%2071-15%20114-47'%20fill='none'%20stroke='%230050a0'%20stroke-width='8'%20stroke-linecap='round'/%3E%3Ccircle%20cx='249'%20cy='68'%20r='14'%20fill='%239fe11d'/%3E%3C/svg%3E",
-  "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20320%20200'%3E%3Crect%20width='320'%20height='200'%20fill='%23f8fdff'/%3E%3Cpath%20d='M48%2050l46%2042-41%2048%2086-6%2047%2037%2029-87%2060-31'%20fill='none'%20stroke='%2338abe4'%20stroke-width='7'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3C/svg%3E",
-  "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20320%20200'%3E%3Crect%20width='320'%20height='200'%20fill='%23f8fdff'/%3E%3Cpath%20d='M67%20124c25-28%2052-31%2079-9s55%2020%2084-13%2044-47%2057-39'%20fill='none'%20stroke='%239fe11d'%20stroke-width='9'%20stroke-linecap='round'/%3E%3Cpath%20d='M72%2064h62M184%20145h73'%20stroke='%230050a0'%20stroke-width='6'%20stroke-linecap='round'/%3E%3C/svg%3E",
+  "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20320%20200'%3E%3Crect%20width='320'%20height='200'%20fill='%23141417'/%3E%3Cpath%20d='M45%20126c33-58%2070%2054%20113-4%2030-40%2067-32%20117-76'%20fill='none'%20stroke='%23ECECEE'%20stroke-width='6'%20stroke-linecap='round'/%3E%3Ccircle%20cx='245'%20cy='61'%20r='9'%20fill='%23FF5D3B'/%3E%3C/svg%3E",
+  "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20320%20200'%3E%3Crect%20width='320'%20height='200'%20fill='%23141417'/%3E%3Cpath%20d='M54%2054l45%2038-42%2042%2082-7%2046%2034%2029-77%2057-25'%20fill='none'%20stroke='%238A8A93'%20stroke-width='6'%20stroke-linecap='round'%20stroke-linejoin='round'/%3E%3Cpath%20d='M74%20152h86'%20stroke='%23FF5D3B'%20stroke-width='4'%20stroke-linecap='round'/%3E%3C/svg%3E",
+  "data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20320%20200'%3E%3Crect%20width='320'%20height='200'%20fill='%23141417'/%3E%3Cpath%20d='M65%20121c25-27%2054-30%2082-8s56%2018%2085-12%2045-43%2056-34'%20fill='none'%20stroke='%23ECECEE'%20stroke-width='6'%20stroke-linecap='round'/%3E%3Cpath%20d='M76%2068h58M187%20148h70'%20stroke='%2355555C'%20stroke-width='5'%20stroke-linecap='round'/%3E%3C/svg%3E",
 ] as const;
 
 const sampleEntries: GuestbookEntry[] = [
   {
     id: "sample-1",
-    created_at: new Date(Date.now() - 1000 * 60 * 6).toISOString(),
+    created_at: "2026-06-16T14:18:00.000Z",
     name: "Future visitor",
-    message: "Leaving a little aqua squiggle here until the live wall is wired up.",
+    message: "A quiet mark while the live wall waits for Supabase.",
     drawing: sampleDoodles[0],
   },
   {
     id: "sample-2",
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+    created_at: "2026-06-16T12:04:00.000Z",
     name: "Hackathon friend",
-    message: "This portfolio already feels like a desktop you want to click around.",
+    message: "Dark mode guestbook feels much closer to the rest of the page.",
     drawing: sampleDoodles[1],
   },
   {
     id: "sample-3",
-    created_at: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    created_at: "2026-06-15T19:42:00.000Z",
     name: "Supabase preview",
-    message: "Connect the env vars and these samples turn into real postcards.",
+    message: "Connect the env vars and these samples become real marks.",
     drawing: sampleDoodles[2],
   },
 ];
 
 type SubmitState = "idle" | "submitting" | "sent" | "error";
+
+type GuestbookResponse = {
+  readonly configured?: boolean;
+  readonly entries?: GuestbookEntry[];
+  readonly error?: string;
+};
+
+type GuestbookPostResponse = {
+  readonly ok?: boolean;
+  readonly configured?: boolean;
+  readonly error?: string;
+  readonly entry?: GuestbookEntry;
+};
 
 function getLocalCooldownRemaining() {
   if (typeof window === "undefined") return 0;
@@ -72,21 +84,28 @@ export function PostcardWall() {
       return;
     }
 
-    const client = supabase;
     let active = true;
 
     async function loadEntries() {
       setConfigured(true);
       setLoading(true);
-      try {
-        const { data, error } = await client
-          .from("guestbook")
-          .select("id, created_at, name, message, drawing")
-          .order("created_at", { ascending: false })
-          .limit(100);
 
-        if (active && !error && data) {
-          setEntries(data as GuestbookEntry[]);
+      try {
+        const response = await fetch("/api/guestbook", { cache: "no-store" });
+        const result = (await response.json()) as GuestbookResponse;
+
+        if (!active) return;
+
+        if (!response.ok || result.configured === false) {
+          setConfigured(false);
+          setEntries(sampleEntries);
+          return;
+        }
+
+        setEntries(result.entries ?? []);
+      } catch {
+        if (active) {
+          setEntries(sampleEntries);
         }
       } finally {
         if (active) {
@@ -154,12 +173,7 @@ export function PostcardWall() {
         }),
       });
 
-      const result = (await response.json()) as {
-        readonly ok?: boolean;
-        readonly configured?: boolean;
-        readonly error?: string;
-        readonly entry?: GuestbookEntry;
-      };
+      const result = (await response.json()) as GuestbookPostResponse;
 
       if (!response.ok || !result.ok || !result.entry) {
         if (result.configured === false) {
@@ -178,136 +192,124 @@ export function PostcardWall() {
       setDrawing(null);
       setCanvasKey((current) => current + 1);
       setSubmitState("sent");
-      setFeedback("Postcard posted.");
+      setFeedback("mark posted");
     } catch {
       setSubmitState("error");
-      setFeedback("Could not post right now. Try again in a bit.");
+      setFeedback("could not post right now");
     }
   }
 
   return (
-    <section id="guestbook" className="scroll-mt-28 py-8" aria-labelledby="guestbook-title">
-      <div className="grid gap-6 md:grid-cols-[14rem_minmax(0,1fr)] md:items-start">
-        <div>
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-aero-deep/72">
-            05 / postcard wall
-          </p>
-          <h2 id="guestbook-title" className="mt-3 text-3xl font-black tracking-normal text-aero-ink sm:text-4xl">
-            Guestbook
-          </h2>
-        </div>
+    <SectionShell id="guestbook" eyebrow="› guestbook" title="Leave a mark">
+      <div className="grid gap-8">
+        <p className="max-w-[54ch] text-lg leading-8 text-text-muted">
+          A small doodle wall for notes from people who pass through.
+        </p>
 
-        <WindowFrame title="guestbook.exe" bodyClassName="p-0">
-          <div className="grid gap-0 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)]">
-            <form
-              onSubmit={handleSubmit}
-              className="grid gap-4 border-b border-white/65 bg-white/30 px-5 py-5 sm:px-6 lg:border-b-0 lg:border-r"
-            >
-              <PostcardCanvas
-                key={canvasKey}
-                onDrawingChange={setDrawing}
+        <div className="grid gap-8 lg:grid-cols-[minmax(17rem,22rem)_minmax(0,1fr)] lg:gap-10">
+          <form onSubmit={handleSubmit} className="grid content-start gap-5 border border-line bg-surface p-4 sm:p-5">
+            <PostcardCanvas
+              key={canvasKey}
+              onDrawingChange={setDrawing}
+              disabled={!configured || submitState === "submitting"}
+            />
+
+            <div className="grid gap-2">
+              <label htmlFor="guestbook-name" className="font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-faint">
+                name
+              </label>
+              <input
+                id="guestbook-name"
+                name="name"
+                maxLength={40}
+                value={name}
                 disabled={!configured || submitState === "submitting"}
+                onChange={(event) => setName(event.target.value)}
+                className="border border-line bg-transparent px-3 py-2.5 text-sm text-text placeholder:text-text-faint transition-colors duration-200 ease-out-expo focus:border-accent focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+                autoComplete="name"
+                required
               />
+            </div>
 
-              <div className="grid gap-2">
-                <label htmlFor="guestbook-name" className="font-mono text-xs font-black uppercase tracking-[0.14em] text-aero-deep">
-                  Name
-                </label>
-                <input
-                  id="guestbook-name"
-                  name="name"
-                  maxLength={40}
-                  value={name}
-                  disabled={!configured || submitState === "submitting"}
-                  onChange={(event) => setName(event.target.value)}
-                  className="rounded-md border border-white/80 bg-white/68 px-3 py-2 text-sm font-semibold text-aero-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.78)] disabled:cursor-not-allowed disabled:opacity-60"
-                  autoComplete="name"
-                  required
-                />
-              </div>
+            <div className="grid gap-2">
+              <label htmlFor="guestbook-message" className="font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-faint">
+                message
+              </label>
+              <textarea
+                id="guestbook-message"
+                name="message"
+                maxLength={500}
+                rows={5}
+                value={message}
+                disabled={!configured || submitState === "submitting"}
+                onChange={(event) => setMessage(event.target.value)}
+                className="resize-none border border-line bg-transparent px-3 py-2.5 text-sm leading-6 text-text placeholder:text-text-faint transition-colors duration-200 ease-out-expo focus:border-accent focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 motion-reduce:transition-none"
+                required
+              />
+              <p className="text-right font-mono text-[0.64rem] uppercase tracking-[0.09em] text-text-faint">{message.length}/500</p>
+            </div>
 
-              <div className="grid gap-2">
-                <label htmlFor="guestbook-message" className="font-mono text-xs font-black uppercase tracking-[0.14em] text-aero-deep">
-                  Message
-                </label>
-                <textarea
-                  id="guestbook-message"
-                  name="message"
-                  maxLength={500}
-                  rows={5}
-                  value={message}
-                  disabled={!configured || submitState === "submitting"}
-                  onChange={(event) => setMessage(event.target.value)}
-                  className="resize-none rounded-md border border-white/80 bg-white/68 px-3 py-2 text-sm font-semibold leading-6 text-aero-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.78)] disabled:cursor-not-allowed disabled:opacity-60"
-                  required
-                />
-                <p className="text-right font-mono text-[0.68rem] font-semibold text-aero-ink/55">{message.length}/500</p>
-              </div>
+            <div className="hidden" aria-hidden="true">
+              <label htmlFor="guestbook-website">Website</label>
+              <input
+                id="guestbook-website"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(event) => setWebsite(event.target.value)}
+              />
+            </div>
 
-              <div className="hidden" aria-hidden="true">
-                <label htmlFor="guestbook-website">Website</label>
-                <input
-                  id="guestbook-website"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  value={website}
-                  onChange={(event) => setWebsite(event.target.value)}
-                />
-              </div>
+            {!configured ? (
+              <p className="border border-line bg-bg px-3 py-2 text-sm leading-6 text-text-muted">
+                Guestbook goes live once Supabase is connected. Sample marks are shown for now.
+              </p>
+            ) : null}
 
-              {!configured ? (
-                <p className="rounded-lg border border-white/75 bg-white/45 px-3 py-2 text-sm font-semibold text-aero-ink/70">
-                  Guestbook goes live once Supabase is connected.
-                </p>
-              ) : null}
+            <span title={disabledReason} className="grid">
+              <button
+                type="submit"
+                disabled={submitDisabled}
+                title={disabledReason}
+                className={cn(
+                  "inline-flex items-center justify-center border border-line px-4 py-3 font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-muted transition-colors duration-200 ease-out-expo hover:border-accent hover:text-text focus-visible:border-accent disabled:cursor-not-allowed disabled:border-line disabled:text-text-faint disabled:opacity-50 motion-reduce:transition-none",
+                  submitState === "sent" && "border-accent text-text",
+                )}
+              >
+                {submitState === "submitting" ? "posting" : "post mark"}
+              </button>
+            </span>
 
-              <span title={disabledReason} className="grid">
-                <button
-                  type="submit"
-                  disabled={submitDisabled}
-                  title={disabledReason}
-                  className={cn(
-                    "inline-flex items-center justify-center gap-2 rounded-md border border-white/80 bg-aero-deep px-4 py-3 font-mono text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_14px_28px_rgba(0,80,160,0.22),inset_0_1px_0_rgba(255,255,255,0.34)] transition hover:bg-aero-blue disabled:cursor-not-allowed disabled:bg-aero-ink/35 disabled:text-white/75",
-                    submitState === "sent" && "bg-aero-green text-aero-ink",
-                  )}
-                >
-                  <SendHorizontal aria-hidden="true" className="h-4 w-4" />
-                  {submitState === "submitting" ? "Sending" : "Post postcard"}
-                </button>
-              </span>
-              {feedback ? (
-                <p className="font-mono text-[0.72rem] font-bold uppercase tracking-[0.12em] text-aero-deep" aria-live="polite">
-                  {feedback}
-                </p>
-              ) : null}
-            </form>
+            {feedback ? (
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-faint" aria-live="polite">
+                {feedback}
+              </p>
+            ) : null}
+          </form>
 
-            <div className="grid gap-4 px-5 py-5 sm:px-6">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="font-mono text-xs font-black uppercase tracking-[0.14em] text-aero-deep">
-                  {configured ? "recent postcards" : "sample postcards"}
-                </p>
-                <p className="font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] text-aero-ink/55">
-                  newest first
-                </p>
-              </div>
+          <div className="grid content-start gap-4">
+            <div className="flex flex-wrap items-end justify-between gap-3 border-b border-line pb-3">
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.09em] text-text-faint">
+                {configured ? "recent marks" : "sample marks"}
+              </p>
+              <p className="font-mono text-[0.64rem] uppercase tracking-[0.09em] text-text-faint">
+                newest first
+              </p>
+            </div>
 
-              {loading ? (
-                <p className="rounded-lg border border-white/75 bg-white/45 px-4 py-3 text-sm font-semibold text-aero-ink/70">
-                  Loading postcards...
-                </p>
-              ) : null}
+            {loading ? (
+              <p className="border border-line bg-surface px-4 py-3 text-sm text-text-muted">Loading marks...</p>
+            ) : null}
 
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {entries.map((entry) => (
-                  <Postcard key={entry.id} entry={entry} />
-                ))}
-              </div>
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+              {entries.map((entry) => (
+                <Postcard key={entry.id} entry={entry} />
+              ))}
             </div>
           </div>
-        </WindowFrame>
+        </div>
       </div>
-    </section>
+    </SectionShell>
   );
 }
