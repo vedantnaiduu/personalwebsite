@@ -9,8 +9,7 @@ const links = [
   { label: "Email", href: `mailto:${identity.email}` },
 ] as const;
 
-// the bio, minus the greeting (which becomes the headline)
-const bio = about.voice.map((p, i) => (i === 0 ? p.replace(/^Hi, I'm Vedant\.\s*/, "") : p));
+const closingLink = "let's chat too :)";
 
 export function About() {
   return (
@@ -27,11 +26,23 @@ export function About() {
           </h1>
 
           <div className="mt-6 max-w-[54ch] space-y-4 font-sans text-base leading-[1.7] text-ink sm:text-lg">
-            {bio.map((paragraph, i) => (
-              <p key={paragraph} className={i === 0 ? "text-ink" : "text-text-muted"}>
-                {paragraph}
-              </p>
-            ))}
+            {about.voice.map((paragraph, i) => {
+              const [beforeClosing] = paragraph.split(closingLink);
+
+              return (
+                <p key={paragraph} className={i === 0 ? "text-ink" : "text-text-muted"}>
+                  {beforeClosing}
+                  {paragraph.includes(closingLink) ? (
+                    <a
+                      className="link-wipe text-ink transition-colors duration-200 ease-out-expo hover:text-accent focus-visible:text-accent"
+                      href={`mailto:${identity.email}`}
+                    >
+                      {closingLink}
+                    </a>
+                  ) : null}
+                </p>
+              );
+            })}
           </div>
 
           <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[11px] uppercase tracking-[0.12em] text-text-muted">

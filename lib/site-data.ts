@@ -52,6 +52,17 @@ export type AboutContent = {
   readonly personalityFacts: readonly string[];
 };
 
+export type Venture = {
+  readonly name: string;
+  readonly tagline: string;
+  readonly overview: string;
+  readonly focusAreas: readonly {
+    readonly label: string;
+    readonly description: string;
+  }[];
+  readonly pilot: string;
+};
+
 export const identity = {
   name: "Vedant Naidu",
   email: "vedantsnaidu@gmail.com",
@@ -218,17 +229,39 @@ export const skillGroups = [
 
 export const about = {
   voice: [
-    "Hi, I'm Vedant. I'm a CS student at UMass Amherst, minoring in biology.",
-    "I care most about where healthcare and AI actually meet, because that's where the interesting problems and the real stakes both live. I like building things that make it past the demo and into someone's real workflow.",
-    "Right now that means a RAG system used across 351 Massachusetts health departments. Before that, computational biology research at a Stanford lab.",
-    "Off the clock I'm on a pickleball court, chasing a gym PR, somewhere in a house set, or rewatching Suits.",
+    "I'm obsessed with augmenting workflows. Most of what I build starts with a process people have just accepted as painful.",
+    "As an AI engineer for the state of Massachusetts, I built the AI system that health inspectors across all 351 Massachusetts health departments will use to navigate state regulations. Inspectors used to spend 8+ minutes digging through dense regulatory PDFs for one answer. Now they get it in under 30 seconds, cited to the exact regulation.",
+    "At a Stanford lab, I automated the search for optic nerve regeneration targets, narrowing thousands of protein candidates down to a dozen worth testing.",
+    "On the side, I've won two hackathons building around the same idea: RetroCare, a voice agent that checks in on elderly patients and flags health decline to caregivers, and Resi, a voice agent that holds a natural back-and-forth conversation with students to report dorm issues, then automatically documents each one and routes it to the right team.",
+    "Now I'm building Multi-Hat, hands-free documentation for electrical contractors on smart glasses. We're piloting with three contractors right now.",
+    "If you're an electrical contractor tired of chasing paperwork or fighting over change orders, I'd love to hear how your team handles documentation today. And if you're building something cool, let's chat too :)",
   ],
   personalityFacts: [
-    "CS + biology, UMass Amherst '27",
-    "Into the healthcare and AI intersection",
-    "Builds things meant to outlive the demo",
-    "Pickleball and gym PRs",
-    "House music, festivals, live sets",
-    "Currently rewatching Suits",
+    "Starts with workflows people have accepted as painful",
+    "Builds AI systems for real public-sector users",
+    "Applies automation to scientific discovery",
+    "Builds voice agents that turn conversations into action",
+    "Building Multi-Hat for electrical contractors",
   ],
 } as const satisfies AboutContent;
+
+export const venture = {
+  name: "Multi-Hat",
+  tagline: "Hands-free documentation for electrical contractors.",
+  overview:
+    "Critical jobsite context is often reconstructed after the work is done—from scattered notes, photos, and memory. Multi-Hat uses smart glasses to help electricians document the work while they are doing it, keeping their hands on the job and giving the office a clearer record of what happened in the field.",
+  focusAreas: [
+    {
+      label: "Price estimates",
+      description:
+        "Capturing the field context behind scope and pricing so contractors spend less time piecing estimates together after a walkthrough.",
+    },
+    {
+      label: "RFI documentation",
+      description:
+        "Recording conditions and questions where they arise so teams have better documentation when preparing and responding to RFIs.",
+    },
+  ],
+  pilot:
+    "We are piloting Multi-Hat with three electrical contractors, learning directly from real jobsites and tightening the workflow around the documentation problems that cost their teams the most time.",
+} as const satisfies Venture;

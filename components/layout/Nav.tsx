@@ -3,6 +3,7 @@ import Link from "next/link";
 import { identity } from "@/lib/site-data";
 
 const navItems = [
+  { label: "ventures", href: "#ventures" },
   { label: "work", href: "#work" },
   { label: "about", href: "#about" },
   { label: "résumé ↗", href: identity.resumePdf },
